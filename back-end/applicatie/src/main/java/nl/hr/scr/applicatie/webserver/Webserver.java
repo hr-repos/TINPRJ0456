@@ -3,6 +3,7 @@ package nl.hr.scr.applicatie.webserver;
 import io.javalin.Javalin;
 import nl.hr.scr.applicatie.Main;
 import nl.hr.scr.applicatie.util.NetworkUtil;
+import nl.hr.scr.applicatie.webserver.path.Database;
 import nl.hr.scr.applicatie.webserver.path.Ping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,7 @@ public final class Webserver
         });
 
         new Ping(this);
+        new Database(this, main);
     }
 
     public void close() {
