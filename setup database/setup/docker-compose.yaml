@@ -1,0 +1,18 @@
+version: '3'
+services:
+  schooldb:
+    container_name: schooldb_maria
+    image: mariadb:10.6
+    restart: unless-stopped
+    volumes:
+      - /opt/schooldb/mysql:/var/lib/mysql    #all files are found in /opt/schooldb/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=!6D6xr34@VikRA
+      - MYSQL_PASSWORD=kX5Ey6W9DsCm
+      - MYSQL_DATABASE=scrdb
+      - MYSQL_USER=sqluser
+      - MYSQL_TCP_PORT=3309
+      - MYSQL_UNIX_PORT=3309
+      - MYSQL_PORT=3309
+    ports:
+      - 3309:3309
