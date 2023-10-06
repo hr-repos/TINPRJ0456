@@ -34,14 +34,14 @@
     </div>
   </div>
   <div>
-    <LineChart title="Chart"/>
+    <BarChart />
     
   </div>
 </template>
 
 <script setup lang="ts">
 import BorderBlock from './components/BorderBlock.vue';
-import LineChart from './components/LineChart.vue';
+import BarChart from './components/BarChart.vue';
 </script>
 
 <style scoped>
