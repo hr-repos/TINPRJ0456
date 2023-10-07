@@ -1,9 +1,9 @@
 sql:
-  host: 'localhost'
+  host: 'database'
   port: 3306
   database: 'scr'
   username: 'scr'
-  password: '9qzBztVPQFRkGVYPyml8k6BKLB8iS10x'
+  password: 'u0u6YiSVp9T2jQ1YsQ24bPPj0XoPZ8ug'
 
 webserver:
   port: 8080

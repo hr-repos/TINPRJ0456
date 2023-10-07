@@ -2,6 +2,11 @@
 	root * /var/www/html
 	encode zstd gzip
 
+	@api path /api/*
+	handle @api {
+		reverse_proxy api:8080
+	}
+
 	handle {
 		try_files {path} index.html =404
 		file_server

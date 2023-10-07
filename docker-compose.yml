@@ -1,0 +1,25 @@
+# gebruik de naam van de service als host i.p.v. localhost
+#  om intern te verbinden met een container
+
+version: '3'
+services:
+  proxy:
+    container_name: scr-proxy
+    image: scr-proxy:latest
+    restart: unless-stopped
+    ports: [80:80]
+  database:
+    container_name: scr-database
+    image: mariadb:11.1
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=65p2BMiHD1OBZEJu0ScNfq5sxNr7KQLj
+      - MYSQL_PASSWORD=u0u6YiSVp9T2jQ1YsQ24bPPj0XoPZ8ug
+      - MYSQL_DATABASE=scr
+      - MYSQL_USER=scr
+    # volumes: [/opt/scr/mysql:/var/lib/mysql]
+  api:
+    container_name: scr-api
+    image: scr-api:latest
+    restart: unless-stopped
+    depends_on: [database]
