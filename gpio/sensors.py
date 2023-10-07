@@ -12,10 +12,10 @@ SENSOR_PIN = 17  # GPIO pin number
 
 # Initialize MariaDB connection
 conn = mariadb.connect(
-    user="your_username",
-    password="your_password",
-    host="localhost",
-    database="your_database"
+    user="scr",
+    password="u0u6YiSVp9T2jQ1YsQ24bPPj0XoPZ8ug",
+    host="database",
+    database="scr"
 )
 cursor = conn.cursor()
 
