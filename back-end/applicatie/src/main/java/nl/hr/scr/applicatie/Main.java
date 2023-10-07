@@ -3,6 +3,7 @@ package nl.hr.scr.applicatie;
 import me.justeli.esqueleto.Esqueleto;
 import me.justeli.esqueleto.driver.MariaDBDriver;
 import nl.hr.scr.applicatie.config.Config;
+import nl.hr.scr.applicatie.database.CreateTables;
 import nl.hr.scr.applicatie.webserver.Webserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,8 @@ public final class Main
             this.config.sql().username(),
             this.config.sql().password()
         );
+
+        new CreateTables(this);
 
         this.webserver = new Webserver(this);
     }
