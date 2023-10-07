@@ -23,3 +23,8 @@ services:
     image: scr-api:latest
     restart: unless-stopped
     depends_on: [database]
+  # gpio:
+  #   container_name: scr-gpio
+  #   image: scr-gpio:latest
+  #   restart: unless-stopped
+  #   privileged: true

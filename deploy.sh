@@ -28,6 +28,11 @@ npm run build-only
 echo -e "\n\n\nBuilding Docker image for proxy, including dashboard..."
 docker build -t scr-proxy .
 
+cd ../gpio
+
+echo -e "\n\n\nBuilding Docker image for GPIO..."
+docker build -t scr-gpio .
+
 cd ..
 
 
