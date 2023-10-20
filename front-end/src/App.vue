@@ -1,54 +1,19 @@
 <template>
-  <div>
-    <div class="header">
-      Input NH3:
-    </div>
-    <div class="block">
-      <BorderBlock :title="randomTitle1">
-        <!-- You can place your content here -->
-      </BorderBlock>
-    </div>
-    <div class="header">
-      Output NH3:
-    </div>
-    <div class="block">
-      <BorderBlock :title="randomTitle2">
-        <!-- You can place your content here -->
-      </BorderBlock>
-    </div>
-    <div class="header">
-      Input CO2:
-    </div>
-    <div class="block">
-      <BorderBlock :title="randomTitle3">
-        <!-- You can place your content here -->
-      </BorderBlock>
-    </div>
-    <div class="header">
-      Berekening:
-    </div>
-    <div class="block">
-      <BorderBlock :title="randomTitle4">
-        <!-- You can place your content here -->
-      </BorderBlock>
-    </div>
-  </div>
-  <div>
-    <BarChart title="Chart" />
-  </div>
+    <router-view />
+    <p>Connected: {{ open }}</p>
 </template>
 
-<script setup lang="ts">
-import BorderBlock from './components/BorderBlock.vue';
-import BarChart from './components/BarChart.vue';
+<script lang="ts">
+import { websocket } from '@/stores/websocket'
+import { defineComponent } from 'vue'
+import { mapState } from 'pinia'
 
-const randomTitle1 = generateRandomTitle();
-const randomTitle2 = generateRandomTitle();
-const randomTitle3 = generateRandomTitle();
-const randomTitle4 = generateRandomTitle();
-
-function generateRandomTitle() {
-  // Function to generate a random number between 1 and 100 and convert it to a string
-  return Math.floor(Math.random() * 100) + 1 + ' ppm';
-}
+export default defineComponent({
+    created() {
+        websocket().init()
+    },
+    computed: {
+        ...mapState(websocket, ['open'])
+    }
+})
 </script>

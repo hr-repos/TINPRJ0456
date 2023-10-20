@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount, defineProps } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { Chart, LinearScale, Title, Tooltip, Legend } from 'chart.js';
 
 const props = defineProps<{

@@ -1,15 +1,13 @@
 <template>
   <div class="border">
-    <p>{{ title }}</p>
+    <p>{{ title }}ppm</p>
     <slot></slot>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
-
 const props = defineProps<{
-  title: string;
+  title: any;
 }>();
 </script>
 

@@ -5,6 +5,7 @@ import nl.hr.scr.applicatie.Main;
 import nl.hr.scr.applicatie.util.NetworkUtil;
 import nl.hr.scr.applicatie.webserver.path.Database;
 import nl.hr.scr.applicatie.webserver.path.Ping;
+import nl.hr.scr.applicatie.webserver.websocket.Websocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +16,7 @@ public final class Webserver
 
     private final Main main;
     private final Javalin javalin;
+    private final Websocket socket;
 
     public Webserver(Main main) {
         this.main = main;
@@ -32,6 +34,8 @@ public final class Webserver
                 context.path());
         });
 
+        this.socket = new Websocket(this, main);
+
         new Ping(this);
         new Database(this, main);
     }
@@ -42,5 +46,9 @@ public final class Webserver
 
     public Javalin http() {
         return javalin;
+    }
+
+    public Websocket socket() {
+        return socket;
     }
 }

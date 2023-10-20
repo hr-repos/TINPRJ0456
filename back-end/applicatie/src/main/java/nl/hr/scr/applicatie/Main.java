@@ -4,6 +4,7 @@ import me.justeli.esqueleto.Esqueleto;
 import me.justeli.esqueleto.driver.MariaDBDriver;
 import nl.hr.scr.applicatie.config.Config;
 import nl.hr.scr.applicatie.database.CreateTables;
+import nl.hr.scr.applicatie.monitor.Sensors;
 import nl.hr.scr.applicatie.webserver.Webserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,9 +38,13 @@ public final class Main
             this.config.sql().password()
         );
 
+        // database
         new CreateTables(this);
 
         this.webserver = new Webserver(this);
+
+        // monitor
+        new Sensors(this);
     }
 
     public void onDisable() {
@@ -53,6 +58,10 @@ public final class Main
 
     public Esqueleto sql() {
         return sql;
+    }
+
+    public Webserver api() {
+        return webserver;
     }
 
     public static void main(String... args) {

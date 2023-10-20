@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "To successfully run this script, you need:"
+echo    "  Docker Desktop   -> https://www.docker.com/products/docker-desktop/"
+echo -e "  Node             -> https://nodejs.org/en \n\n\n\n"
+
 cd back-end
 
 echo -e "\n\n\nBuilding Java API back-end..."
