@@ -1,47 +1,44 @@
 #!/bin/bash
 
-echo "To successfully run this script, you need:"
-echo    "  Docker Desktop   -> https://www.docker.com/products/docker-desktop/"
-echo -e "  Node             -> https://nodejs.org/en \n\n\n\n"
+exitting() {
+    echo "Can't build. Exiting..."
+    sleep 10
+    exit 1
+}
 
-cd back-end
-
-echo -e "\n\n\nBuilding Java API back-end..."
-mvn clean package
-
-if [ $? -ne 0 ]; then
-    echo -e "\n\nMaven is not globally installed.\nBuild the back-end yourself with Maven.\n"
-    read -p "Did you do this? (y/n): " choice
-
-    if [ "$choice" != "y" ]; then
-        echo "Can't build Docker images. Exiting..."
-        sleep 5
-        exit 1
-    fi
+if ! type -p java || ! java -version 2>&1 | grep -q "version \"21"; then
+    echo -e "Java 21 is not installed.\nInstallation: https://www.oracle.com/java/technologies/downloads/#jdk21-windows"
+    exitting
 fi
 
-echo -e "\n\n\nBuilding Docker image for API..."
+if ! type -p mvn; then
+    echo -e "Maven is not installed.\nInstallation: https://phoenixnap.com/kb/install-maven-windows"
+    exitting
+fi
+
+if ! type -p docker; then
+    echo -e "Docker Desktop is not installed.\nInstallation: https://www.docker.com/products/docker-desktop/"
+    exitting
+fi
+
+if ! type -p npm; then
+    echo -e "Node (NPM) is not installed.\nInstallation: https://nodejs.org/en"
+    exitting
+fi
+
+cd back-end
+mvn clean package
 docker build -t scr-api .
 
 cd ../front-end
-
-echo -e "\n\n\nBuilding Vue front-end dashboard..."
 npm install
 npm run build-only
-
-echo -e "\n\n\nBuilding Docker image for proxy, including dashboard..."
 docker build -t scr-proxy .
 
 cd ../gpio
-
-echo -e "\n\n\nBuilding Docker image for GPIO..."
 docker build -t scr-gpio .
 
 cd ..
-
-
 echo -e "\n\n\nStarting up Docker compose containers..."
 docker-compose -p scr up -d
-
-
 echo "Build process completed."
