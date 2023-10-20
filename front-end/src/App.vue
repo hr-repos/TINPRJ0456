@@ -4,7 +4,7 @@
       Input NH3:
     </div>
     <div class="block">
-      <BorderBlock title="Border 1">
+      <BorderBlock :title="randomTitle1">
         <!-- You can place your content here -->
       </BorderBlock>
     </div>
@@ -12,7 +12,7 @@
       Output NH3:
     </div>
     <div class="block">
-      <BorderBlock title="Border 2">
+      <BorderBlock :title="randomTitle2">
         <!-- You can place your content here -->
       </BorderBlock>
     </div>
@@ -20,7 +20,7 @@
       Input CO2:
     </div>
     <div class="block">
-      <BorderBlock title="Border 3">
+      <BorderBlock :title="randomTitle3">
         <!-- You can place your content here -->
       </BorderBlock>
     </div>
@@ -28,37 +28,27 @@
       Berekening:
     </div>
     <div class="block">
-      <BorderBlock title="Border 4">
+      <BorderBlock :title="randomTitle4">
         <!-- You can place your content here -->
       </BorderBlock>
     </div>
   </div>
   <div>
-    <BarChart />
-    
+    <BarChart title="Chart" />
   </div>
 </template>
 
 <script setup lang="ts">
 import BorderBlock from './components/BorderBlock.vue';
 import BarChart from './components/BarChart.vue';
+
+const randomTitle1 = generateRandomTitle();
+const randomTitle2 = generateRandomTitle();
+const randomTitle3 = generateRandomTitle();
+const randomTitle4 = generateRandomTitle();
+
+function generateRandomTitle() {
+  // Function to generate a random number between 1 and 100 and convert it to a string
+  return Math.floor(Math.random() * 100) + 1 + ' ppm';
+}
 </script>
-
-<style scoped>
-/* Styling for the header elements */
-.header {
-  font-weight: bold;
-  font-size: 30px;
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-/* Styling for the .block elements */
-.block {
-  display: inline-block;
-  vertical-align: top;
-  width: calc(25% - 20px); /* Adjust the width as needed, accounting for margin */
-  margin-right: 20px; /* Reduce the margin between blocks to an appropriate value */
-  margin-bottom: 20px; /* Add margin to separate blocks vertically */
-}
-</style>
