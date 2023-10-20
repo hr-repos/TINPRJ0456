@@ -7,22 +7,28 @@ exitting() {
 }
 
 if ! type -p java || ! java -version 2>&1 | grep -q "version \"21"; then
-    echo -e "Java 21 is not installed.\nInstallation: https://www.oracle.com/java/technologies/downloads/#jdk21-windows"
+    echo -e "\nJava 21 is not installed.\nInstallation: https://www.oracle.com/java/technologies/downloads/#jdk21-windows"
     exitting
 fi
 
 if ! type -p mvn; then
-    echo -e "Maven is not installed.\nInstallation: https://phoenixnap.com/kb/install-maven-windows"
+    echo -e "\nMaven is not installed.\nInstallation: https://phoenixnap.com/kb/install-maven-windows"
     exitting
 fi
 
 if ! type -p docker; then
-    echo -e "Docker Desktop is not installed.\nInstallation: https://www.docker.com/products/docker-desktop/"
+    echo -e "\nDocker Desktop is not installed.\nInstallation: https://www.docker.com/products/docker-desktop/"
     exitting
 fi
 
 if ! type -p npm; then
-    echo -e "Node (NPM) is not installed.\nInstallation: https://nodejs.org/en"
+    echo -e "\nNode (NPM) is not installed.\nInstallation: https://nodejs.org/en"
+    exitting
+fi
+
+docker ps
+if [ $? -ne 0 ]; then
+    echo -e "\nDocker Desktop is not started up. Start it up first."
     exitting
 fi
 
