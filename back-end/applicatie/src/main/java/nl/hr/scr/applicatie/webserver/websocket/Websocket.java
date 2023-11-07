@@ -27,7 +27,11 @@ public final class Websocket
     }
 
     public void broadcast(Map<String, ?> message) {
-        this.connected.forEach(ws -> ws.send(message));
+        System.out.println("Connected: " + this.connected.size());
+        this.connected.forEach(ws -> {
+            ws.send(message);
+            System.out.println("Sent message: " + message);
+        });
     }
 
     private static final Map<String, Boolean> CONNECTED = Map.of("connected", true);

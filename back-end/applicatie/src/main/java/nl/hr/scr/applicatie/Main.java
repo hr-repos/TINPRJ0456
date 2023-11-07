@@ -4,8 +4,10 @@ import me.justeli.esqueleto.Esqueleto;
 import me.justeli.esqueleto.driver.MariaDBDriver;
 import nl.hr.scr.applicatie.config.Config;
 import nl.hr.scr.applicatie.database.CreateTables;
-import nl.hr.scr.applicatie.monitor.Sensors;
 import nl.hr.scr.applicatie.webserver.Webserver;
+import nl.hr.scr.applicatie.webserver.path.Database;
+import nl.hr.scr.applicatie.webserver.path.Ping;
+import nl.hr.scr.applicatie.webserver.path.Sensors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,10 +43,12 @@ public final class Main
         // database
         new CreateTables(this);
 
+        // webserver
         this.webserver = new Webserver(this);
 
-        // monitor
-        new Sensors(this);
+        new Database(this.webserver, this);
+        new Ping(this.webserver);
+        new Sensors(this.webserver, this);
     }
 
     public void onDisable() {
