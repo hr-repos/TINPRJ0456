@@ -49,7 +49,7 @@ export default {
         },
         colors: ['#83FF33', '#DE5433'],
         dataLabels: {
-          enabled: true,
+          enabled: false,
         },
         stroke: {
           curve: 'smooth',
