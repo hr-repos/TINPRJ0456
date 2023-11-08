@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="410mm"
+   height="55mm"
+   viewBox="0 0 410 55"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="houten-buizen-demo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.73851712"
+     inkscape:cx="792.80492"
+     inkscape:cy="345.28651"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:none;stroke:#ff0000;stroke-width:0.264583;stroke-linejoin:bevel"
+       id="rect184"
+       width="200"
+       height="50"
+       x="205.98552"
+       y="2.4071159" />
+    <circle
+       style="fill:none;stroke:#ff0000;stroke-width:0.11832;stroke-linejoin:bevel"
+       id="path420"
+       cx="305.98553"
+       cy="27.40712"
+       r="3.4408402" />
+    <text
+       xml:space="preserve"
+       style="font-size:14.1111px;fill:none;stroke:#ff0000;stroke-width:0.264583;stroke-linejoin:bevel"
+       x="264.00363"
+       y="16.888885"
+       id="text476-8"><tspan
+         sodipodi:role="line"
+         id="tspan474-7"
+         style="font-size:14.1111px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         x="264.00363"
+         y="16.888885">NH<tspan
+   style="font-size:14.1111px;baseline-shift:sub"
+   id="tspan1185-1">3</tspan>-output</tspan></text>
+    <rect
+       style="fill:none;stroke:#ff0000;stroke-width:0.264583;stroke-linejoin:bevel"
+       id="rect184-6"
+       width="200"
+       height="50"
+       x="3.1797345"
+       y="2.5862529" />
+    <circle
+       style="fill:none;stroke:#ff0000;stroke-width:0.11832;stroke-linejoin:bevel"
+       id="path420-5"
+       cx="103.17974"
+       cy="27.586252"
+       r="3.4408402" />
+    <text
+       xml:space="preserve"
+       style="font-size:14.1111px;fill:none;stroke:#ff0000;stroke-width:0.264583;stroke-linejoin:bevel"
+       x="66.324127"
+       y="17.068026"
+       id="text476-8-7"><tspan
+         sodipodi:role="line"
+         id="tspan474-7-6"
+         style="font-size:14.1111px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         x="66.324127"
+         y="17.068026">NH<tspan
+   style="font-size:14.1111px;baseline-shift:sub"
+   id="tspan1185-1-5">3</tspan>-input</tspan></text>
+  </g>
+</svg>
