@@ -1,89 +1,104 @@
 <template>
-  <div class="chart-container">
-    <h2>{{ title }}</h2>
-    <canvas ref="chartCanvas"></canvas>
+  <div id="chart">
+    <h2 class="chart-title">Chart of Sensors</h2>
+    <apexchart type="line" height="500" width="1000" :options="chartOptions" :series="series"></apexchart>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { Chart, LinearScale, Title, Tooltip, Legend } from 'chart.js';
+<script>
+import VueApexCharts from 'vue3-apexcharts';
 
-const props = defineProps<{
-  title: string;
-}>();
-
-const chartCanvas = ref<HTMLCanvasElement | null>(null);
-let chart: Chart | null = null;
-
-const chartData = {
-  labels: ['0', '10', '20', '30', '40', '50'],
-  datasets: [
-    {
-      label: 'Ammonia Concentration (ppm)',
-      data: [5, 10, 8, 15, 12, 20],
-      fill: false,
-      borderColor: 'rgb(75, 192, 192)',
-      tension: 0.4,
-      yAxisID: 'y-axis-1',
-    },
-  ],
-};
-
-onMounted(() => {
-  const ctx = chartCanvas.value?.getContext('2d');
-  if (ctx) {
-    Chart.register(LinearScale, Title, Tooltip, Legend);
-
-    chart = new Chart(ctx, {
-      type: 'line',
-      data: chartData,
-      options: {
-        responsive: true,
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Time (seconds)',
-            },
+export default {
+  components: {
+    apexchart: VueApexCharts,
+  },
+  props: {
+    inputNH3: Array,
+    outputNH3: Array,
+    min: Number,
+    max: Number,
+  },
+  data() {
+    return {
+      series: [
+        {
+          name: "Input NH3",
+          data: this.inputNH3,
+        },
+        {
+          name: "Output NH3",
+          data: this.outputNH3,
+        },
+      ],
+      chartOptions: {
+        chart: {
+          height: 800,
+          width: 1200,
+          type: 'line',
+          dropShadow: {
+            enabled: true,
+            color: '#000',
+            top: 18,
+            left: 7,
+            blur: 10,
+            opacity: 0.2,
           },
-          y: {
-            position: 'left',
-            title: {
-              display: true,
-              text: 'Ammonia Concentration (ppm)',
-            },
+          toolbar: {
+            show: false,
           },
         },
-        plugins: {
-          title: {
-            display: true,
-            text: 'Ammonia Concentration Over Time',
+        colors: ['#83FF33', '#DE5433'],
+        dataLabels: {
+          enabled: true,
+        },
+        stroke: {
+          curve: 'smooth',
+        },
+        title: {
+          text: 'Data sensors',
+          align: 'left',
+        },
+        grid: {
+          borderColor: '#e7e7e7',
+          row: {
+            colors: ['#494442', '#655F5C'],
+            opacity: 0.5,
           },
+        },
+        markers: {
+          size: 1,
+        },
+        xAxis: {
+          categories: Array.from({ length: this.inputNH3.length }, (_, i) => (i + 1).toString()),
+          title: {
+            text: 'Time in milliseconds',
+          },
+        },
+        yaxis: {
+          title: {
+            text: 'NH3 in ppm',
+          },
+          min: this.min,
+          max: this.max,
+        },
+        legend: {
+          position: 'top',
+          horizontalAlign: 'right',
+          floating: true,
+          offsetY: -25,
+          offsetX: -5,
         },
       },
-    });
-  }
-});
-
-onBeforeUnmount(() => {
-  if (chart) {
-    chart.destroy();
-  }
-});
+    };
+  },
+};
 </script>
 
 <style scoped>
-.chart-container {
-  width: 100%;
-  height: 400px;
+.chart-title {
   text-align: center;
-  margin-top: 20px;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
-.chart-container h2 {
-  font-size: 30px;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
 </style>
