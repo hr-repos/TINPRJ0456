@@ -37,7 +37,7 @@ export default {
           type: 'line',
           dropShadow: {
             enabled: true,
-            color: '#000',
+            color: '#fff',
             top: 18,
             left: 7,
             blur: 10,
@@ -99,6 +99,6 @@ export default {
   text-align: center;
   font-size: 24px;
   margin-bottom: 20px;
+  color: white;
 }
-
 </style>
