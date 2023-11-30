@@ -19,7 +19,7 @@
           </BorderBlock>
         </div>
         <div class="header">
-          Berekening:
+          Calculation:
         </div>
         <div class="block">
           <BorderBlock :title="calculation">
