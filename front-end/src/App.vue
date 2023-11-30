@@ -16,8 +16,11 @@
                                     </template>
                                 </div>
                             </div>
+                            <div class="ml-4" v-if="state">
+                                <LoadSpinner/>
+                            </div>
                         </div>
-                        <div class="flex-1 px-2 flex justify-center lg:justify-end">
+                        <div class="flex-1 px-2 flex justify-end">
                             <span v-if="open" class="text-emerald-500">Connected</span>
                             <span v-else class="text-red-500">Disconnected</span>
                         </div>
@@ -57,6 +60,8 @@ import { websocket } from '@/stores/websocket'
 import { defineComponent } from 'vue'
 import { mapState } from 'pinia'
 import DropdownMenu from './components/DropdownMenu.vue'
+import { pageLoading } from '@/stores/pageLoading'
+import LoadSpinner from "@/components/LoadSpinner.vue";
 
 const navigation = [
     { name: 'Home', to: '/' },
@@ -75,8 +80,9 @@ export default defineComponent({
         }
     },
     computed: {
-        ...mapState(websocket, ['open'])
+        ...mapState(websocket, ['open']),
+        ...mapState(pageLoading, ['state'])
     },
-    components: { DropdownMenu }
+    components: {LoadSpinner, DropdownMenu }
 })
 </script>

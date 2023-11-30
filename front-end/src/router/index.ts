@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { pageLoading } from '@/stores/pageLoading'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,5 +16,25 @@ router.afterEach(to => {
         document.title = `SCR / ${to.name.toString()}`
     }
 });
+
+let current: String
+let loading: Boolean = false
+
+router.beforeEach((to, from, next) => {
+    if (current !== to.path && !loading) {
+        pageLoading().set(true)
+        current = to.path
+        loading = true
+    }
+
+    next()
+})
+
+router.afterEach(to => {
+    if (loading) {
+        pageLoading().set(false)
+        loading = false
+    }
+})
 
 export default router

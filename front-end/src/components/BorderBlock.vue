@@ -29,5 +29,4 @@ const props = defineProps<{
     text-align: center;
     font-size: 30px;
 }
-
 </style>
