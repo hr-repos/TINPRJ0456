@@ -1,18 +1,3 @@
-CREATE TABLE projects (
-    id            INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    name          VARCHAR(30)   NOT NULL,
-    creation_date DATETIME      NOT NULL DEFAULT NOW(),
-    description   VARCHAR(1000) NOT NULL DEFAULT '',
-    creator_name  VARCHAR(60)   NOT NULL
-);
-
-CREATE INDEX index_projects_name ON projects (name);
-
-CREATE TABLE sensors (
-    id   TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(20) UNIQUE NOT NULL
-);
-
 CREATE TABLE data (
     measure_date DATETIME         NOT NULL DEFAULT NOW(),
     project_id   INT UNSIGNED     NOT NULL,
