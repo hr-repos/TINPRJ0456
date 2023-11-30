@@ -41,8 +41,8 @@ npm install
 npm run build-only
 docker build -t scr-proxy .
 
-cd ../gpio
-docker build -t scr-gpio .
+# cd ../gpio
+# docker build -t scr-gpio .
 
 cd ..
 echo -e "\n\n\nStarting up Docker compose containers..."
