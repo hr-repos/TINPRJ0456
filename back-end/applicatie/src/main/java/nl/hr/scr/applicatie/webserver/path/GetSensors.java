@@ -5,6 +5,7 @@ import nl.hr.scr.applicatie.Main;
 import nl.hr.scr.applicatie.webserver.Webserver;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,14 +22,14 @@ public class GetSensors {
         List<Map<String, Object>> sensors = new ArrayList<>();
         main.sql().statement("SELECT id, name, pin, calibrationA, calibrationB, calibrationC FROM sensors ORDER BY pin").query().complete(data -> {
             while (data.next()) {
-                sensors.add(Map.of(
-                    "id", data.getInt("id"),
-                    "name", data.getString("name"),
-                    "pin", data.getInt("pin"),
-                    "calibration_a", data.getNullableFloat("calibrationA"),
-                    "calibration_b", data.getNullableFloat("calibrationB"),
-                    "calibration_c", data.getNullableFloat("calibrationC")
-                ));
+                sensors.add(new HashMap<>() {{
+                    put("id", data.getInt("id"));
+                    put("name", data.getString("name"));
+                    put("pin", data.getInt("pin"));
+                    put("calibration_a", data.getNullableFloat("calibrationA"));
+                    put("calibration_b", data.getNullableFloat("calibrationB"));
+                    put("calibration_c", data.getNullableFloat("calibrationC"));
+                }});
             }
         });
 

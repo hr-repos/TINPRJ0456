@@ -7,6 +7,7 @@ import nl.hr.scr.applicatie.Main;
 import nl.hr.scr.applicatie.webserver.Webserver;
 import nl.hr.scr.applicatie.webserver.json.ProjectDetails;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -36,14 +37,14 @@ public class SubmitProject {
             details.active()
         ).update().complete(data -> {
             if (data.next()) {
-                return Map.of(
-                    "id", data.getInt("id"),
-                    "name", data.getString("name"),
-                    "creation_date", data.getInt("creation_date"),
-                    "description", data.getString("description"),
-                    "creator_name", data.getString("creator_name"),
-                    "active", data.getBoolean("active")
-                );
+                return new HashMap<>() {{
+                    put("id", data.getInt("id"));
+                    put("name", data.getString("name"));
+                    put("creation_date", data.getInt("creation_date"));
+                    put("description", data.getString("description"));
+                    put("creator_name", data.getString("creator_name"));
+                    put("active", data.getBoolean("active"));
+                }};
             }
             return null;
         });

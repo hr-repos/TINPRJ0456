@@ -24,7 +24,7 @@ import LineChart from '../components/LineChart.vue'
 </script>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
+import { defineComponent } from 'vue'
 import emitter from '@/router/emitter'
 
 export default defineComponent({
