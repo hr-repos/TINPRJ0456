@@ -11,8 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 /* Eli @ October 20, 2023 (nl.hr.scr.applicatie.webserver.websocket) */
-public final class Websocket
-{
+public final class Websocket {
     private final Main main;
     private final Set<WsContext> connected = new HashSet<>();
 

@@ -8,8 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.SplittableRandom;
 
 /* Eli van der Does (1061322) @ September 30, 2023 */
-public class Database
-{
+public class Database {
     private final Main main;
 
     public Database(Webserver webserver, Main main) {

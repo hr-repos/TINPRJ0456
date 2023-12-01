@@ -7,7 +7,11 @@ import nl.hr.scr.applicatie.database.CreateTables;
 import nl.hr.scr.applicatie.webserver.Webserver;
 import nl.hr.scr.applicatie.webserver.path.Database;
 import nl.hr.scr.applicatie.webserver.path.Ping;
-import nl.hr.scr.applicatie.webserver.path.Sensors;
+import nl.hr.scr.applicatie.webserver.path.GetProjects;
+import nl.hr.scr.applicatie.webserver.path.SubmitSensorData;
+import nl.hr.scr.applicatie.webserver.path.GetSensors;
+import nl.hr.scr.applicatie.webserver.path.SubmitProject;
+import nl.hr.scr.applicatie.webserver.path.SubmitSensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,8 +19,7 @@ import java.util.Optional;
 import java.util.concurrent.Executors;
 
 /* Eli @ September 30, 2023 (nl.hr.scr.applicatie) */
-public final class Main
-{
+public final class Main {
     public static Logger LOGGER = LoggerFactory.getLogger(Main.class.getSimpleName());
     private static final long STARTUP_MILLIS = System.currentTimeMillis();
 
@@ -46,9 +49,14 @@ public final class Main
         // webserver
         this.webserver = new Webserver(this);
 
+        // register api through constructor
         new Database(this.webserver, this);
+        new GetProjects(this.webserver, this);
+        new GetSensors(this.webserver, this);
         new Ping(this.webserver);
-        new Sensors(this.webserver, this);
+        new SubmitProject(this.webserver, this);
+        new SubmitSensor(this.webserver, this);
+        new SubmitSensorData(this.webserver, this);
     }
 
     public void onDisable() {
