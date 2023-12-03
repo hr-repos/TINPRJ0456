@@ -46,8 +46,8 @@
             <div class="max-w-7xl mx-auto pb-8 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
                 <div class="mt-8 md:mt-0 md:order-1">
                     <div class="text-center md:text-left text-base text-gray-500">
-                        <p>Dashboard voor het SCR-systeem</p>
-                        <p class="text-sm">Gemaakt door: Tigo Goes, Thomas van Vliet, Tim Kieboom, en Eli van der Does</p>
+                        <p>Dashboard for the SCR system</p>
+                        <p class="text-sm">Made by: Tigo Goes, Thomas van Vliet, Tim Kieboom, and Eli van der Does</p>
                     </div>
                 </div>
             </div>
@@ -66,6 +66,7 @@ import LoadSpinner from "@/components/LoadSpinner.vue";
 const navigation = [
     { name: 'Home', to: '/' },
     { name: 'Dashboard', to: '/dashboard' },
+    { name: 'History', to: '/history' },
     { name: 'Projects', to: '/projects' },
     { name: 'Sensors', to: '/sensors' },
 ]

@@ -25,10 +25,17 @@ public class SubmitSensor {
 
         if (!dataValidator.errors().isEmpty()) {
             context.status(HttpStatus.BAD_REQUEST);
+            context.json(Map.of("error", "Invalid data"));
             return;
         }
 
         SensorDetails details = dataValidator.get();
+        if (details.name() == null || details.name().length() < 3 || details.name().length() > 20) {
+            context.status(HttpStatus.BAD_REQUEST);
+            context.json(Map.of("error", "Invalid name"));
+            return;
+        }
+
         Optional<Map<String, Object>> inserted = main.sql().statement(
             "INSERT INTO sensors (name, pin) VALUES (?, ?)",
             details.name(),
@@ -49,6 +56,7 @@ public class SubmitSensor {
 
         if (inserted.isEmpty()) {
             context.status(HttpStatus.BAD_REQUEST);
+            context.json(Map.of("error", "Could not insert sensor"));
             return;
         }
 

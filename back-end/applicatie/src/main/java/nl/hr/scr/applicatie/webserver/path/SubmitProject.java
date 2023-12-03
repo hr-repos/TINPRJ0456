@@ -25,10 +25,23 @@ public class SubmitProject {
 
         if (!dataValidator.errors().isEmpty()) {
             context.status(HttpStatus.BAD_REQUEST);
+            context.json(Map.of("error", "Invalid data"));
             return;
         }
 
         ProjectDetails details = dataValidator.get();
+        if (details.name() == null || details.name().length() < 3 || details.name().length() > 30) {
+            context.status(HttpStatus.BAD_REQUEST);
+            context.json(Map.of("error", "Invalid name"));
+            return;
+        }
+
+        if (details.creatorName() == null || details.creatorName().length() < 3 || details.creatorName().length() > 60) {
+            context.status(HttpStatus.BAD_REQUEST);
+            context.json(Map.of("error", "Invalid creator name"));
+            return;
+        }
+
         Optional<Map<String, Object>> inserted = main.sql().statement(
             "INSERT INTO projects (name, description, creator_name, active) VALUES (?, ?, ?, ?)",
             details.name(),
@@ -40,7 +53,7 @@ public class SubmitProject {
                 return new HashMap<>() {{
                     put("id", data.getInt("id"));
                     put("name", data.getString("name"));
-                    put("creation_date", data.getInt("creation_date"));
+                    put("creation_date", data.getString("creation_date"));
                     put("description", data.getString("description"));
                     put("creator_name", data.getString("creator_name"));
                     put("active", data.getBoolean("active"));
@@ -51,6 +64,7 @@ public class SubmitProject {
 
         if (inserted.isEmpty()) {
             context.status(HttpStatus.BAD_REQUEST);
+            context.json(Map.of("error", "Could not insert project"));
             return;
         }
 

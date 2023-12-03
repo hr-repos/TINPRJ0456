@@ -24,8 +24,3 @@ body {
     -moz-osx-font-smoothing: grayscale;
     @apply text-gray-900 bg-gray-100;
 }
-
-button[disabled] {
-    opacity: 0.2;
-    cursor: not-allowed;
-}

@@ -29,7 +29,7 @@ public class GetProjects {
                 projects.add(new HashMap<>() {{
                     put("id", data.getInt("id"));
                     put("name", data.getString("name"));
-                    put("creation_date", data.getInt("creation_date"));
+                    put("creation_date", data.getString("creation_date"));
                     put("description", data.getString("description"));
                     put("creator_name", data.getString("creator_name"));
                     put("active", data.getBoolean("active"));

@@ -6,8 +6,11 @@ const router = createRouter({
     routes: [
         { path: '/', name: 'Home', component: () => import('../views/Home.vue') },
         { path: '/dashboard', name: 'Dashboard', component: () => import('../views/Dashboard.vue') },
+        { path: '/history', name: 'History', component: () => import('../views/History.vue') },
         { path: '/projects', name: 'Projects', component: () => import('../views/Projects.vue') },
         { path: '/sensors', name: 'Sensors', component: () => import('../views/Sensors.vue') },
+
+        { path: '/:catchAll(.*)', name: 'Error', component: () => import('/src/views/error/404.vue') },
     ]
 });
 
