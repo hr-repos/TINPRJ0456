@@ -4,9 +4,9 @@
             <p>You can make a new project here. Just type in the name of the new project in the bar on the right.</p>
         </div>
         <div class="flex-1 flex flex-col gap-2">
-            <input v-model="inputName" @keyup.enter="submit" placeholder="Project name"/>
-            <input v-model="inputDescription" @keyup.enter="submit" placeholder="Description"/>
-            <input v-model="inputCreator" @keyup.enter="submit" placeholder="Creator name"/>
+            <input type="text" v-model="inputName" @keyup.enter="submit" placeholder="Project name"/>
+            <input type="text" v-model="inputDescription" @keyup.enter="submit" placeholder="Description"/>
+            <input type="text" v-model="inputCreator" @keyup.enter="submit" placeholder="Creator name"/>
             <button id="submit" @click="submit">Create project</button>
         </div>
     </div>
@@ -40,7 +40,7 @@
             <tbody>
                 <tr v-for="i in projects" class="bg-white border-b hover:bg-gray-50">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                        {{ i.active }}
+                        <input @click="change(i.id)" :checked="i.active" type="radio" id="active_project" name="active_project">
                     </th>
                     <td class="px-6 py-4">
                         {{ i.id }}
@@ -76,6 +76,27 @@ export default {
         };
     },
     methods: {
+        async change(project_id) {
+            toast.info('Changing active project')
+
+            await fetch('/api/submit-project-active-change', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: project_id,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        toast.error(data.error)
+                        return
+                    }
+
+                    toast.success('Changed active project')
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                })
+        },
         async submit() {
             document.getElementById("submit").disabled = true
             toast.info('Adding project')

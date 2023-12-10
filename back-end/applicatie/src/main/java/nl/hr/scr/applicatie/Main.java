@@ -8,6 +8,7 @@ import nl.hr.scr.applicatie.webserver.Webserver;
 import nl.hr.scr.applicatie.webserver.path.Database;
 import nl.hr.scr.applicatie.webserver.path.Ping;
 import nl.hr.scr.applicatie.webserver.path.GetProjects;
+import nl.hr.scr.applicatie.webserver.path.SubmitProjectActiveChange;
 import nl.hr.scr.applicatie.webserver.path.SubmitSensorData;
 import nl.hr.scr.applicatie.webserver.path.GetSensors;
 import nl.hr.scr.applicatie.webserver.path.SubmitProject;
@@ -55,6 +56,7 @@ public final class Main {
         new GetSensors(this.webserver, this);
         new Ping(this.webserver);
         new SubmitProject(this.webserver, this);
+        new SubmitProjectActiveChange(this.webserver, this);
         new SubmitSensor(this.webserver, this);
         new SubmitSensorData(this.webserver, this);
     }
