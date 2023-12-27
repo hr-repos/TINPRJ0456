@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "chart.js": "^4.4.0",
+    "flatpickr": "^4.6.13",
     "mitt": "^3.0.1",
     "pinia": "^2.1.6",
     "vue": "^3.3.4",
     "vue-chartjs": "^5.2.0",
+    "vue-flatpickr-component": "^11.0.3",
     "vue-router": "^4.2.4",
     "vue3-apexcharts": "^1.4.4",
     "vue3-toastify": "^0.1.14"
