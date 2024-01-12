@@ -2,7 +2,7 @@
 <template>
   <div class="date-time-pickers-container">
     <div class="date-time-picker">
-      <label for="startDateTime">Start:</label>
+      <label for="startDateTime">Start: </label>
       <input
         v-model="startDateTime"
         id="startDateTime"
@@ -12,7 +12,7 @@
       />
     </div>
     <div class="date-time-picker">
-      <label for="endDateTime">End:</label>
+      <label for="endDateTime">End: </label>
       <input
         v-model="endDateTime"
         id="endDateTime"
@@ -65,11 +65,17 @@ onMounted(() => {
 <style scoped>
 .date-time-pickers-container {
   display: flex;
-  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .date-time-picker {
   flex: 1;
   margin-right: 20px;
+  display: flex;
+}
+
+.date-time-picker:last-child {
+  margin-left: 170px;
 }
 </style>
+

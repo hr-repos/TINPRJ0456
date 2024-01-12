@@ -76,7 +76,7 @@ export default {
                 },
                 yaxis: {
                     title: {
-                        text: 'NH3 in ppm'
+                        text: 'NH3 in µm/m3'
                     },
                     min: this.min,
                     max: this.max
