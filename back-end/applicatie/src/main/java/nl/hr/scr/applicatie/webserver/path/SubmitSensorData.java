@@ -31,10 +31,10 @@ public final class SubmitSensorData {
         System.out.println(data);
 
         this.main.api().socket().broadcast(Map.of(
-            "inputNH3", data.inputNH3(),
-            "outputNH3", data.outputNH3(),
-            "inputCO2", -999,
-            "calculation", data.inputNH3() - data.outputNH3()
+            "inputNH3", data.data().get(0),
+            "outputNH3", data.data().get(1),
+            "inputCO2", data.data().get(2),
+            "calculation", data.data().get(1) - data.data().get(0)
         ));
     }
 

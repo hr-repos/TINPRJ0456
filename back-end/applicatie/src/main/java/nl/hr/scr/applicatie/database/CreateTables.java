@@ -17,7 +17,7 @@ public final class CreateTables
             )
             """).update().complete();
 
-        main.sql().statement("CREATE INDEX index_projects_name ON projects (name)").update().complete();
+        main.sql().statement("CREATE INDEX IF NOT EXISTS index_projects_name ON projects (name)").update().complete();
 
         main.sql().statement("""
             CREATE TABLE IF NOT EXISTS sensors (
@@ -42,8 +42,8 @@ public final class CreateTables
             )
                     """).update().complete();
 
-        main.sql().statement("CREATE INDEX index_data_measure_date ON data (measure_date)").update().complete();
-        main.sql().statement("CREATE INDEX index_data_project_id ON data (project_id)").update().complete();
-        main.sql().statement("CREATE INDEX index_data_sensor_id ON data (sensor_id)").update().complete();
+        main.sql().statement("CREATE INDEX IF NOT EXISTS index_data_measure_date ON data (measure_date)").update().complete();
+        main.sql().statement("CREATE INDEX IF NOT EXISTS index_data_project_id ON data (project_id)").update().complete();
+        main.sql().statement("CREATE INDEX IF NOT EXISTS index_data_sensor_id ON data (sensor_id)").update().complete();
     }
 }
