@@ -55,6 +55,28 @@ export default defineComponent({
     },
     mounted() {
         emitter.on('socket', (data: any) => {
+            if (data['inputNH3']) {
+                this.inputNH3 = data['inputNH3']
+                if (this.inputNH3Array.length > 30) {
+                    this.inputNH3Array.shift()
+                }
+                this.inputNH3Array.push(data['inputNH3'])
+                this.min = Math.min(Math.min(this.outputNH3Array), Math.min(this.inputNH3Array))
+            }
+            if (data['outputNH3']) {
+                this.outputNH3 = data['outputNH3']
+                if (this.outputNH3Array.length > 30) {
+                    this.outputNH3Array.shift()
+                }
+                this.outputNH3Array.push(data['outputNH3'])
+                this.max = Math.max(Math.max(this.outputNH3Array), Math.max(this.inputNH3Array))
+            }
+            if (data['inputCO2']) {
+                this.inputCO2 = data['inputCO2']
+            }
+            if (data['calculation']) {
+                this.calculation = data['calculation']
+            }
         })
     },
     unmounted() {
