@@ -20,7 +20,7 @@
                             <div v-if="i.calibration_a || i.calibration_b || i.calibration_c">
                                 {{i.calibration_a}}x² + {{i.calibration_b}}x + {{i.calibration_c}}
                             </div>
-                            <div v-els class="text-red-600 text-xs">Not calibrated</div>
+                            <div v-else class="text-red-600 text-xs">Not calibrated</div>
                         </td>
                     </tr>
                     </tbody>
@@ -35,12 +35,10 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue"
+<script>
 import { toast } from 'vue3-toastify'
 
-export default defineComponent({
-    name: 'Sensors',
+export default {
     data() {
         return {
             sensors: [],
@@ -91,5 +89,5 @@ export default defineComponent({
             vm.sensors = data
         })
     }
-})
+}
 </script>

@@ -29,7 +29,7 @@
             </nav>
             <div class="mb-4 mt-5 lg:mb-5 lg:mt-6">
                 <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 min-h-[40px]">
-                    <div class="lg:w-0 lg:flex-1">
+                    <div class="lg:flex-1">
                         <span class="text-3xl" v-text="$route.name" />
                     </div>
                 </div>

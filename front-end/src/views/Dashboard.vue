@@ -1,8 +1,9 @@
 <template>
-    <div class="flex flex-row justify-between">
-        <BorderBlock name="Input NH3" :title="sensorData[0]" />
-        <BorderBlock name="Output NH3" :title="sensorData[1]" />
-        <BorderBlock name="Calculation" :title="sensorData[2]" />
+    <div v-if="project">
+        {{ project }}
+        <div class="flex flex-row justify-between">
+            <BorderBlock v-for="i in project.sensors" :name="i.name" :title="sensorData[i.pin]" />
+        </div>
     </div>
     <div class="chart block">
         <LineChart title="chart" :inputNH3="inputNH3Array" :outputNH3="outputNH3Array"/>
@@ -13,16 +14,13 @@
     </div>
 </template>
 
-<script setup lang="ts">
-import BorderBlock from '../components/BorderBlock.vue'
-import LineChart from '../components/LineChart.vue'
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script>
 import emitter from '@/router/emitter'
+import BorderBlock from '@/components/BorderBlock.vue'
+import LineChart from '@/components/LineChart.vue'
 
-export default defineComponent({
+export default {
+    components: { LineChart, BorderBlock },
     methods: {
         test() {
             this.testing = !this.testing
@@ -49,7 +47,7 @@ export default defineComponent({
         },
     },
     mounted() {
-        emitter.on('socket', (data: any) => {
+        emitter.on('socket', data => {
             this.sensorData = data['sensor_data'] // = array [200, 250, 200, 200, 200, 200]
                                                   //    pin = 0,   1,   2,   3,   4,   5
 
@@ -72,9 +70,10 @@ export default defineComponent({
     unmounted() {
         emitter.off('socket')
     },
-    data: () => {
+    data() {
         return {
             sensorData: [],
+            project: null,
             inputNH3Array: [],
             outputNH3Array: [],
             min: 0,
@@ -82,6 +81,12 @@ export default defineComponent({
             testing: false,
             fakeDataInterval: 0,
         }
+    },
+    async beforeRouteEnter(to, from, next) {
+        const data = await (await fetch('/api/get-active-project')).json()
+        next(vm => {
+            vm.project = data
+        })
     }
-})
+}
 </script>

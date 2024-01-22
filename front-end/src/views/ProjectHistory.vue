@@ -39,8 +39,7 @@ export default {
         LineChart,
         HistoryChart
     },
-    data()
-    {
+    data() {
         return {
             inputNH3: [], // Replace with actual data
             outputNH3: [], // Replace with actual data

@@ -22,8 +22,8 @@ router.afterEach(to => {
     }
 });
 
-let current: String
-let loading: Boolean = false
+let current = null
+let loading = false
 
 router.beforeEach((to, from, next) => {
     if (current !== to.path && !loading) {
