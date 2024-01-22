@@ -9,6 +9,7 @@ export const websocket = defineStore('websocket', {
     actions: {
         init() {
             this.socket = new WebSocket(`ws://${window.location.hostname}/api/socket`)
+            // this.socket = new WebSocket(`ws://145.24.238.97/api/socket`)
 
             this.socket.onmessage = event => {
                 const data = JSON.parse(event.data)
