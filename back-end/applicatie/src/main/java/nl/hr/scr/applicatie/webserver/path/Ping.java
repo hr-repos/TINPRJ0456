@@ -13,9 +13,7 @@ public final class Ping {
     }
 
     private static final Map<String, String> MESSAGE =
-        Map.of(
-            "message", "Pong!"
-        );
+        Map.of("message", "Pong!");
 
     private void handle (Context context) {
         Webserver.LOGGER.info("Body: " + context.body());

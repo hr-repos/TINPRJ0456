@@ -6,9 +6,13 @@ a {
     transition: 0.2s;
 }
 
-button {
+button, .router-button {
     @apply rounded-md shadow-sm px-3 py-1 hover:bg-opacity-90 focus:ring-2 text-white font-bold
            focus:ring-offset-2 focus:ring-pink-800 transition ease-in duration-100 bg-gradient-to-r from-purple-700 to-pink-700;
+}
+
+.router-button {
+    @apply text-center;
 }
 
 button[disabled] {

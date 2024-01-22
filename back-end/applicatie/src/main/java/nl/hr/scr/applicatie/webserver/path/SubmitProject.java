@@ -61,7 +61,7 @@ public class SubmitProject {
                 return new HashMap<>() {{
                     put("id", data.getInt("id"));
                     put("name", data.getString("name"));
-                    put("creation_date", data.getString("creation_date"));
+                    put("creation_date", data.getString("creation_unix"));
                     put("description", data.getString("description"));
                     put("creator_name", data.getString("creator_name"));
                     put("frequency", data.getInt("frequency"));

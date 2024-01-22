@@ -10,7 +10,7 @@ public final class CreateTables
             CREATE TABLE IF NOT EXISTS projects (
                 id            INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 name          VARCHAR(30)       NOT NULL,
-                creation_date BIGINT            NOT NULL DEFAULT UNIX_TIMESTAMP(),
+                creation_unix BIGINT            NOT NULL DEFAULT UNIX_TIMESTAMP(),
                 description   VARCHAR(1000)     NOT NULL DEFAULT '',
                 creator_name  VARCHAR(60)       NOT NULL,
                 frequency     SMALLINT UNSIGNED NOT NULL DEFAULT 1000,
@@ -30,7 +30,10 @@ public final class CreateTables
                 calibrationB FLOAT DEFAULT NULL,
                 calibrationC FLOAT DEFAULT NULL,
             
-                CONSTRAINT foreign_key_sensors_project_id FOREIGN KEY (project_id) REFERENCES projects (id)
+                CONSTRAINT foreign_key_sensors_project_id FOREIGN KEY (project_id) REFERENCES projects (id),
+            
+                CHECK (pin BETWEEN 0 AND 7),
+                UNIQUE (pin, project_id)
             )
             """).update().complete();
 
@@ -38,15 +41,15 @@ public final class CreateTables
 
         main.sql().statement("""
             CREATE TABLE IF NOT EXISTS data (
-                measure_date BIGINT             NOT NULL DEFAULT UNIX_TIMESTAMP(),
-                sensor_id    MEDIUMINT UNSIGNED NOT NULL,
-                value        DECIMAL(9, 3)      NOT NULL DEFAULT 0,
+                measure_millis BIGINT             NOT NULL DEFAULT ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000),
+                sensor_id      MEDIUMINT UNSIGNED NOT NULL,
+                value          DECIMAL(9, 3)      NOT NULL DEFAULT 0,
             
                 CONSTRAINT foreign_key_data_sensor_id FOREIGN KEY (sensor_id) REFERENCES sensors (id)
             )
             """).update().complete();
 
-        main.sql().statement("CREATE INDEX IF NOT EXISTS index_data_measure_date ON data (measure_date)").update().complete();
+        main.sql().statement("CREATE INDEX IF NOT EXISTS index_data_measure_date ON data (measure_millis)").update().complete();
         main.sql().statement("CREATE INDEX IF NOT EXISTS index_data_sensor_id ON data (sensor_id)").update().complete();
     }
 }

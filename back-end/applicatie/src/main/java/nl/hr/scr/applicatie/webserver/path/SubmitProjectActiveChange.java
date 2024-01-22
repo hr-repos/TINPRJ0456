@@ -1,15 +1,10 @@
 package nl.hr.scr.applicatie.webserver.path;
 
 import io.javalin.http.Context;
-import io.javalin.http.HttpStatus;
-import io.javalin.validation.BodyValidator;
 import nl.hr.scr.applicatie.Main;
 import nl.hr.scr.applicatie.webserver.Webserver;
-import nl.hr.scr.applicatie.webserver.json.ProjectDetails;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 /* Eli van der Does (1061322) @ December 08, 2023 */
 public class SubmitProjectActiveChange
@@ -32,6 +27,8 @@ public class SubmitProjectActiveChange
             "UPDATE projects SET active = TRUE WHERE id = ?",
             activeProject
         ).update().complete();
+
+        main.cache().updateActiveProjectId(activeProject);
 
         context.json(Map.of(
             "updated", activeProject

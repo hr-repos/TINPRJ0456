@@ -15,7 +15,7 @@
 
     <hr class="my-8 border-2">
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div v-if="projects.length > 0" class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-800">
             <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                 <tr>
@@ -40,7 +40,7 @@
                     <td class="px-6 py-4">
                         <p class="text-lg leading-5 mb-1 font-bold" v-text="i.name"></p>
                         <div class="text-[8pt]">
-                            <RouterLink :to="`/project/${i.id}`">Project Page</RouterLink>
+                            <RouterLink :to="`/project/${i.id}`">Project page</RouterLink>
                         </div>
                     </td>
                     <td class="px-6 py-4">
@@ -52,7 +52,7 @@
                         <div class="mb-1">
                             <p v-for="j in i.sensors" v-text="`(${j.pin}) ${j.name}`"></p>
                         </div>
-                        <RouterLink :to="`/project/${i.id}/sensors`" class="text-[8pt]">Add Sensor</RouterLink>
+                        <RouterLink :to="`/project/${i.id}/sensors`" class="text-[8pt]">Add sensor</RouterLink>
                     </td>
                     <td class="px-6 py-4">
                         <p v-text="i.frequency + 'ms'"></p>
@@ -67,6 +67,10 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div v-else>
+        <p class="font-bold">No projects found.</p>
+        <p>Create a new project above here.</p>
     </div>
 </template>
 

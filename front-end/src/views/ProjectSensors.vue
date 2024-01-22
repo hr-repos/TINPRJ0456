@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-row gap-8">
         <div class="flex-1">
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <div v-if="sensors.length > 0" class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                     <tr>
@@ -25,6 +25,10 @@
                     </tr>
                     </tbody>
                 </table>
+            </div>
+            <div v-else>
+                <p class="font-bold">No sensors found for this project.</p>
+                <p>Add a sensor on the right.</p>
             </div>
         </div>
         <div class="flex flex-col gap-2">

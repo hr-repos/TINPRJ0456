@@ -62,6 +62,8 @@ public class SubmitSensor {
             return;
         }
 
+        main.cache().updateSensors(details.project());
+
         context.json(inserted.get());
     }
 }

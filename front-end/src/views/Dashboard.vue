@@ -1,16 +1,32 @@
 <template>
-    <div v-if="project">
-        {{ project }}
-        <div class="flex flex-row justify-between">
-            <BorderBlock v-for="i in project.sensors" :name="i.name" :title="sensorData[i.pin]" />
+    <div v-if="project && project.name">
+        <div class="flex justify-between mb-3">
+            <p>
+                <span>Current project: </span>
+                <span class="font-bold" v-text="`${project.id}. ${project.name}`"></span>
+            </p>
+            <p>
+                <RouterLink to="/projects">Change active project</RouterLink>
+                &bull;
+                <RouterLink :to="`/project/${project.id}/sensors`">Add sensors</RouterLink>
+            </p>
+        </div>
+        <div v-if="project.sensors.length > 0" class="grid grid-cols-4 gap-4">
+            <BorderBlock v-for="i in project.sensors" :name="`${i.name} (pin ${i.pin})`" :title="sensorData[i.pin]" />
+        </div>
+        <div v-else>
+            <p>No sensors found for this project: <RouterLink :to="`/project/${project.id}/sensors`">Add sensors</RouterLink></p>
+        </div>
+        <div class="chart block">
+            <LineChart title="chart" :inputNH3="inputNH3Array" :outputNH3="outputNH3Array"/>
+        </div>
+        <div>
+            <button @click="test" v-if="testing">Disable testing</button>
+            <button @click="test" v-else>Enable testing</button>
         </div>
     </div>
-    <div class="chart block">
-        <LineChart title="chart" :inputNH3="inputNH3Array" :outputNH3="outputNH3Array"/>
-    </div>
-    <div>
-        <button @click="test" v-if="testing">Disable testing</button>
-        <button @click="test" v-else>Enable testing</button>
+    <div v-else>
+        <p>No active project found: <RouterLink to="/projects">Change active project</RouterLink></p>
     </div>
 </template>
 

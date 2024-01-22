@@ -16,7 +16,7 @@ public class GetProject
 {
     private final Main main;
 
-    public GetProject (Webserver webserver, Main main) {
+    public GetProject(Webserver webserver, Main main) {
         this.main = main;
         webserver.http().get("api/get-project/{id}", this::handle);
         webserver.http().get("api/get-active-project", this::handle);
@@ -31,11 +31,11 @@ public class GetProject
         UnparsedStatement statement;
         if (projectId.get() == 0) {
             statement = main.sql().statement(
-                "SELECT id, name, creation_date, description, creator_name, frequency, active FROM projects WHERE active = TRUE LIMIT 1"
+                "SELECT id, name, creation_unix, description, creator_name, frequency, active FROM projects WHERE active = TRUE LIMIT 1"
             );
         } else {
             statement = main.sql().statement(
-                "SELECT id, name, creation_date, description, creator_name, frequency, active FROM projects WHERE id = ?",
+                "SELECT id, name, creation_unix, description, creator_name, frequency, active FROM projects WHERE id = ?",
                 projectId.get()
             );
         }
@@ -45,7 +45,7 @@ public class GetProject
                 projectId.set(data.getInt("id"));
                 values.put("id", projectId.get());
                 values.put("name", data.getString("name"));
-                values.put("creation_date", data.getLong("creation_date"));
+                values.put("creation_date", data.getLong("creation_unix"));
                 values.put("description", data.getString("description"));
                 values.put("creator_name", data.getString("creator_name"));
                 values.put("frequency", data.getInt("frequency"));
@@ -55,7 +55,7 @@ public class GetProject
 
         List<Map<String, Object>> sensors = new ArrayList<>();
         main.sql().statement(
-            "SELECT id, name, pin FROM sensors WHERE project_id = ?",
+            "SELECT id, name, pin FROM sensors WHERE project_id = ? ORDER BY pin",
             projectId.get()
         ).query().complete(sensorData -> {
             while (sensorData.next()) {

@@ -2,9 +2,11 @@ package nl.hr.scr.applicatie;
 
 import me.justeli.esqueleto.Esqueleto;
 import me.justeli.esqueleto.driver.MariaDBDriver;
+import nl.hr.scr.applicatie.cache.SensorCache;
 import nl.hr.scr.applicatie.config.Config;
 import nl.hr.scr.applicatie.database.CreateTables;
 import nl.hr.scr.applicatie.webserver.Webserver;
+import nl.hr.scr.applicatie.webserver.path.ExportToCsv;
 import nl.hr.scr.applicatie.webserver.path.GetProject;
 import nl.hr.scr.applicatie.webserver.path.Ping;
 import nl.hr.scr.applicatie.webserver.path.GetProjects;
@@ -27,6 +29,7 @@ public final class Main {
     private Config config;
     private Esqueleto sql;
     private Webserver webserver;
+    private SensorCache cache;
 
     public void onEnable() {
         this.config = Config.parse("config.yml");
@@ -46,11 +49,13 @@ public final class Main {
 
         // database
         new CreateTables(this);
+        this.cache = new SensorCache(this);
 
         // webserver
         this.webserver = new Webserver(this);
 
         // register api through constructor
+        new ExportToCsv(this.webserver, this);
         new GetProject(this.webserver, this);
         new GetProjects(this.webserver, this);
         new GetSensors(this.webserver, this);
@@ -76,6 +81,10 @@ public final class Main {
 
     public Webserver api() {
         return webserver;
+    }
+
+    public SensorCache cache() {
+        return cache;
     }
 
     public static void main(String... args) {
