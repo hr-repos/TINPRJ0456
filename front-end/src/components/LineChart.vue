@@ -15,7 +15,7 @@ export default {
         inputNH3: Array,
         outputNH3: Array,
         min: Number,
-        max: Number
+        max: Number,
     },
     data()
     {
@@ -36,7 +36,7 @@ export default {
                     // width: 1200,
                     type: 'line',
                     dropShadow: {
-                        enabled: true,
+                        enabled: false,
                         color: '#fff',
                         top: 18,
                         left: 7,
@@ -86,7 +86,7 @@ export default {
                     horizontalAlign: 'right',
                     floating: true,
                     offsetY: -25,
-                    offsetX: -5
+                    offsetX: -5,
                 }
             }
         }
