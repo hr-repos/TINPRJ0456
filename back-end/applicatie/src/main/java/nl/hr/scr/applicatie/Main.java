@@ -5,7 +5,6 @@ import me.justeli.esqueleto.driver.MariaDBDriver;
 import nl.hr.scr.applicatie.config.Config;
 import nl.hr.scr.applicatie.database.CreateTables;
 import nl.hr.scr.applicatie.webserver.Webserver;
-import nl.hr.scr.applicatie.webserver.path.Database;
 import nl.hr.scr.applicatie.webserver.path.GetProject;
 import nl.hr.scr.applicatie.webserver.path.Ping;
 import nl.hr.scr.applicatie.webserver.path.GetProjects;
@@ -52,7 +51,6 @@ public final class Main {
         this.webserver = new Webserver(this);
 
         // register api through constructor
-        new Database(this.webserver, this);
         new GetProject(this.webserver, this);
         new GetProjects(this.webserver, this);
         new GetSensors(this.webserver, this);

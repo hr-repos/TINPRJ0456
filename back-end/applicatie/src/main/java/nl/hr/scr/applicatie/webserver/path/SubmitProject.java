@@ -7,6 +7,7 @@ import nl.hr.scr.applicatie.Main;
 import nl.hr.scr.applicatie.webserver.Webserver;
 import nl.hr.scr.applicatie.webserver.json.ProjectDetails;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -42,12 +43,19 @@ public class SubmitProject {
             return;
         }
 
+        if (details.frequency() < 100 || details.frequency() > 60000) {
+            context.status(HttpStatus.BAD_REQUEST);
+            context.json(Map.of("error", "Invalid frequency (min. 100ms, max. 60000ms)"));
+            return;
+        }
+
         Optional<Map<String, Object>> inserted = main.sql().statement(
-            "INSERT INTO projects (name, description, creator_name, active) VALUES (?, ?, ?, ?)",
+            "INSERT INTO projects (name, description, creator_name, active, frequency) VALUES (?, ?, ?, ?, ?)",
             details.name(),
             details.description(),
             details.creatorName(),
-            details.active()
+            details.active(),
+            details.frequency()
         ).update().complete(data -> {
             if (data.next()) {
                 return new HashMap<>() {{
@@ -56,7 +64,9 @@ public class SubmitProject {
                     put("creation_date", data.getString("creation_date"));
                     put("description", data.getString("description"));
                     put("creator_name", data.getString("creator_name"));
+                    put("frequency", data.getInt("frequency"));
                     put("active", data.getBoolean("active"));
+                    put("sensors", new ArrayList<>());
                 }};
             }
             return null;

@@ -1,24 +1,15 @@
 <template>
     <div class="flex flex-row justify-between">
-        <div>
-            <span class="header">Input NH3</span>
-            <BorderBlock :title="sensorData[0]" />
-        </div>
-        <div>
-            <span class="header">Output NH3</span>
-            <BorderBlock :title="sensorData[1]" />
-        </div>
-        <div>
-            <span class="header">Calculation</span>
-            <BorderBlock :title="sensorData[2]" />
-        </div>
-        <div>
-            <button @click="test" v-if="testing">Disable testing</button>
-            <button @click="test" v-else>Enable testing</button>
-        </div>
+        <BorderBlock name="Input NH3" :title="sensorData[0]" />
+        <BorderBlock name="Output NH3" :title="sensorData[1]" />
+        <BorderBlock name="Calculation" :title="sensorData[2]" />
     </div>
     <div class="chart block">
         <LineChart title="chart" :inputNH3="inputNH3Array" :outputNH3="outputNH3Array"/>
+    </div>
+    <div>
+        <button @click="test" v-if="testing">Disable testing</button>
+        <button @click="test" v-else>Enable testing</button>
     </div>
 </template>
 

@@ -9,11 +9,12 @@ public final class CreateTables
         main.sql().statement("""
             CREATE TABLE IF NOT EXISTS projects (
                 id            INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-                name          VARCHAR(30)   NOT NULL,
-                creation_date BIGINT        NOT NULL DEFAULT UNIX_TIMESTAMP(),
-                description   VARCHAR(1000) NOT NULL DEFAULT '',
-                creator_name  VARCHAR(60)   NOT NULL,
-                active        BOOLEAN       NOT NULL DEFAULT FALSE
+                name          VARCHAR(30)       NOT NULL,
+                creation_date BIGINT            NOT NULL DEFAULT UNIX_TIMESTAMP(),
+                description   VARCHAR(1000)     NOT NULL DEFAULT '',
+                creator_name  VARCHAR(60)       NOT NULL,
+                frequency     SMALLINT UNSIGNED NOT NULL DEFAULT 1000,
+                active        BOOLEAN           NOT NULL DEFAULT FALSE
             )
             """).update().complete();
 
@@ -22,9 +23,9 @@ public final class CreateTables
         main.sql().statement("""
             CREATE TABLE IF NOT EXISTS sensors (
                 id           MEDIUMINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-                name         VARCHAR(20) UNIQUE      NOT NULL,
-                pin          TINYINT UNSIGNED UNIQUE NOT NULL,
-                project_id   INT UNSIGNED            NOT NULL,
+                name         VARCHAR(20)      NOT NULL,
+                pin          TINYINT UNSIGNED NOT NULL,
+                project_id   INT UNSIGNED     NOT NULL,
                 calibrationA FLOAT DEFAULT NULL,
                 calibrationB FLOAT DEFAULT NULL,
                 calibrationC FLOAT DEFAULT NULL,

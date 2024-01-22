@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS sensors (
     id           MEDIUMINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    name         VARCHAR(20) UNIQUE      NOT NULL,
-    pin          TINYINT UNSIGNED UNIQUE NOT NULL,
-    project_id   INT UNSIGNED            NOT NULL,
+    name         VARCHAR(20)      NOT NULL,
+    pin          TINYINT UNSIGNED NOT NULL,
+    project_id   INT UNSIGNED     NOT NULL,
     calibrationA FLOAT DEFAULT NULL,
     calibrationB FLOAT DEFAULT NULL,
     calibrationC FLOAT DEFAULT NULL,

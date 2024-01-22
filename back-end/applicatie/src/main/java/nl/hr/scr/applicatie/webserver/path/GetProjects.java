@@ -21,16 +21,17 @@ public class GetProjects {
     public void handle(Context context) {
         List<Map<String, Object>> projects = new ArrayList<>();
 
-        main.sql().statement("""
-            SELECT p.id, p.name, p.creation_date, p.description, p.creator_name, p.active
-            FROM projects p
-            ORDER BY p.id
-            """).query().complete(data -> {
+        main.sql().statement(
+            "SELECT id, name, creation_date, description, creator_name, active, frequency FROM projects ORDER BY id"
+        ).query().complete(data -> {
             while (data.next()) {
                 long projectId = data.getInt("id");
                 List<Map<String, Object>> sensors = new ArrayList<>();
 
-                main.sql().statement("SELECT s.id, s.name, s.pin FROM sensors s WHERE s.project_id = ?", projectId).query().complete(sensorData -> {
+                main.sql().statement(
+                    "SELECT id, name, pin FROM sensors WHERE project_id = ?",
+                    projectId
+                ).query().complete(sensorData -> {
                     while (sensorData.next()) {
                         sensors.add(new HashMap<>() {{
                             put("id", sensorData.getInt("id"));
@@ -46,6 +47,7 @@ public class GetProjects {
                     put("creation_date", data.getLong("creation_date"));
                     put("description", data.getString("description"));
                     put("creator_name", data.getString("creator_name"));
+                    put("frequency", data.getInt("frequency"));
                     put("active", data.getBoolean("active"));
                     put("sensors", sensors);
                 }});

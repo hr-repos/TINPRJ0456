@@ -1,12 +1,14 @@
 <template>
     <div class="flex flex-row gap-8">
-        <div class="flex-1">
-            <p>You can make a new project here. Just type in the name of the new project in the bar on the right.</p>
-        </div>
         <div class="flex-1 flex flex-col gap-2">
             <input type="text" v-model="inputName" @keyup.enter="submit" placeholder="Project name"/>
             <input type="text" v-model="inputDescription" @keyup.enter="submit" placeholder="Description"/>
+        </div>
+        <div class="flex-1 flex flex-col gap-2">
             <input type="text" v-model="inputCreator" @keyup.enter="submit" placeholder="Creator name"/>
+            <input type="number" v-model="inputFrequency" @keyup.enter="submit" placeholder="Measure frequency (ms)"/>
+        </div>
+        <div class="items-center flex">
             <button id="submit" @click="submit">Create project</button>
         </div>
     </div>
@@ -22,6 +24,7 @@
                     <th scope="col" class="px-6 py-3">Name</th>
                     <th scope="col" class="px-6 py-3">Description</th>
                     <th scope="col" class="px-6 py-3">Sensors</th>
+                    <th scope="col" class="px-6 py-3">Frequency</th>
                     <th scope="col" class="px-6 py-3">Creation date</th>
                     <th scope="col" class="px-6 py-3">Creator</th>
                 </tr>
@@ -35,7 +38,7 @@
                         <RouterLink :to="`/project/${i.id}`" v-text="i.id"></RouterLink>
                     </td>
                     <td class="px-6 py-4">
-                        <p class="text-lg leading-5 mb-1" v-text="i.name"></p>
+                        <p class="text-lg leading-5 mb-1 font-bold" v-text="i.name"></p>
                         <div class="text-[8pt]">
                             <RouterLink :to="`/project/${i.id}`">Project Page</RouterLink>
                         </div>
@@ -45,11 +48,14 @@
                         <p v-else class="italic text-gray-500">No description provided.</p>
                     </td>
                     <td class="px-6 py-4">
-                        <p class="mb-1" v-text="`${i.sensors.length} total`"></p>
+                        <p class="mb-1 font-bold" v-text="`${i.sensors.length} total`"></p>
                         <div class="mb-1">
-                            <p v-for="j in i.sensors" v-text="`${j.name} (pin ${j.pin})`"></p>
+                            <p v-for="j in i.sensors" v-text="`(${j.pin}) ${j.name}`"></p>
                         </div>
                         <RouterLink :to="`/project/${i.id}/sensors`" class="text-[8pt]">Add Sensor</RouterLink>
+                    </td>
+                    <td class="px-6 py-4">
+                        <p v-text="i.frequency + 'ms'"></p>
                     </td>
                     <td class="px-6 py-4">
                         <p v-text="formatDate(i.creation_date)"></p>
@@ -73,6 +79,7 @@ export default {
             inputName: '',
             inputDescription: '',
             inputCreator: '',
+            inputFrequency: null,
             projects: [],
         };
     },
@@ -123,6 +130,7 @@ export default {
                     name: this.inputName,
                     description: this.inputDescription,
                     creatorName: this.inputCreator,
+                    frequency: this.inputFrequency,
                     active: false
                 }),
             })
@@ -136,15 +144,18 @@ export default {
                     this.projects.push({
                         id: data.id,
                         name: this.inputName,
-                        creation_date: 'now',
+                        creation_date: Date.now() / 1000,
                         description: this.inputDescription,
                         creator_name: this.inputCreator,
-                        active: false
+                        frequency: this.inputFrequency,
+                        active: false,
+                        sensors: []
                     })
                     toast.success('Project added')
                     this.inputName = ''
                     this.inputDescription = ''
                     this.inputCreator = ''
+                    this.inputFrequency = null
                 })
                 .catch(error => {
                     console.error('Error:', error);

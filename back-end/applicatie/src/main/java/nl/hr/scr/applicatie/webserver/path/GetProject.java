@@ -42,7 +42,7 @@ public class GetProject
         values.put("sensors", sensors);
 
         main.sql().statement(
-            "SELECT id, name, creation_date, description, creator_name, active FROM projects WHERE id = ? LIMIT 1",
+            "SELECT id, name, creation_date, description, creator_name, active, frequency FROM projects WHERE id = ? LIMIT 1",
             projectId
         ).query().complete(data -> {
             if (data.next()) {
@@ -50,6 +50,7 @@ public class GetProject
                 values.put("creation_date", data.getLong("creation_date"));
                 values.put("description", data.getString("description"));
                 values.put("creator_name", data.getString("creator_name"));
+                values.put("frequency", data.getInt("frequency"));
                 values.put("active", data.getBoolean("active"));
                 values.put("sensors", sensors);
             }

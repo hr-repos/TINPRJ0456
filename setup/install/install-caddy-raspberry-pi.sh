@@ -16,3 +16,5 @@ sudo mkdir -p /var/www/html
 
 # Check if Caddy is correctly installed
 caddy -v
+
+sudo mkdir -p /var/www/dashboard
