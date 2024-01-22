@@ -1,9 +1,7 @@
 <template>
     <div class="border">
-        <div v-if="title === -999">
-            <LoadSpinner/>
-        </div>
-        <p v-else>{{ title }}ppm</p>
+        <p v-if="title" v-text="title + 'ppm'"></p>
+        <div v-else><LoadSpinner/></div>
         <slot></slot>
     </div>
 </template>

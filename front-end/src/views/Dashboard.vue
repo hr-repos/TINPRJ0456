@@ -2,15 +2,15 @@
     <div class="flex flex-row justify-between">
         <div>
             <span class="header">Input NH3</span>
-            <BorderBlock :title="inputNH3" />
+            <BorderBlock :title="sensorData[0]" />
         </div>
         <div>
             <span class="header">Output NH3</span>
-            <BorderBlock :title="outputNH3" />
+            <BorderBlock :title="sensorData[1]" />
         </div>
         <div>
             <span class="header">Calculation</span>
-            <BorderBlock :title="calculation" />
+            <BorderBlock :title="sensorData[2]" />
         </div>
         <div>
             <button @click="test" v-if="testing">Disable testing</button>
@@ -59,27 +59,22 @@ export default defineComponent({
     },
     mounted() {
         emitter.on('socket', (data: any) => {
-            if (data['inputNH3']) {
-                this.inputNH3 = data['inputNH3']
+            this.sensorData = data['sensor_data'] // = array [200, 250, 200, 200, 200, 200]
+                                                  //    pin = 0,   1,   2,   3,   4,   5
+
+            if (this.sensorData[0]) {
                 if (this.inputNH3Array.length > 30) {
                     this.inputNH3Array.shift()
                 }
-                this.inputNH3Array.push(data['inputNH3'])
+                this.inputNH3Array.push(this.sensorData[0])
                 this.min = Math.min(Math.min(this.outputNH3Array), Math.min(this.inputNH3Array))
             }
-            if (data['outputNH3']) {
-                this.outputNH3 = data['outputNH3']
+            if (this.sensorData[1]) {
                 if (this.outputNH3Array.length > 30) {
                     this.outputNH3Array.shift()
                 }
-                this.outputNH3Array.push(data['outputNH3'])
+                this.outputNH3Array.push(this.sensorData[1])
                 this.max = Math.max(Math.max(this.outputNH3Array), Math.max(this.inputNH3Array))
-            }
-            if (data['inputCO2']) {
-                this.inputCO2 = data['inputCO2']
-            }
-            if (data['calculation']) {
-                this.calculation = data['calculation']
             }
         })
     },
@@ -88,10 +83,7 @@ export default defineComponent({
     },
     data: () => {
         return {
-            inputNH3: -999,
-            outputNH3: -999,
-            inputCO2: -999,
-            calculation: -999,
+            sensorData: [],
             inputNH3Array: [],
             outputNH3Array: [],
             min: 0,
