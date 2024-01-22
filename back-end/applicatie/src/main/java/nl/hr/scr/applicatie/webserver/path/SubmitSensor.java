@@ -37,15 +37,17 @@ public class SubmitSensor {
         }
 
         Optional<Map<String, Object>> inserted = main.sql().statement(
-            "INSERT INTO sensors (name, pin) VALUES (?, ?)",
+            "INSERT INTO sensors (name, pin, project_id) VALUES (?, ?, ?)",
             details.name(),
-            details.pin()
+            details.pin(),
+            details.project()
         ).update().complete(data -> {
             if (data.next()) {
                 return new HashMap<>() {{
                     put("id", data.getInt("id"));
                     put("name", data.getString("name"));
                     put("pin", data.getInt("pin"));
+                    put("project_id", data.getInt("project_id"));
                     put("calibration_a", data.getNullableFloat("calibrationA"));
                     put("calibration_b", data.getNullableFloat("calibrationB"));
                     put("calibration_c", data.getNullableFloat("calibrationC"));

@@ -1,6 +1,7 @@
 package nl.hr.scr.applicatie.webserver.path;
 
 import io.javalin.http.Context;
+import io.javalin.http.HttpStatus;
 import nl.hr.scr.applicatie.Main;
 import nl.hr.scr.applicatie.webserver.Webserver;
 
@@ -15,12 +16,17 @@ public class GetSensors {
 
     public GetSensors(Webserver webserver, Main main) {
         this.main = main;
-        webserver.http().get("api/get-sensors", this::handle);
+        webserver.http().get("api/get-sensors/{project_id}", this::handle);
     }
 
     public void handle(Context context) {
+        var projectId = context.pathParamAsClass("project_id", Integer.class);
         List<Map<String, Object>> sensors = new ArrayList<>();
-        main.sql().statement("SELECT id, name, pin, calibrationA, calibrationB, calibrationC FROM sensors ORDER BY pin").query().complete(data -> {
+
+        main.sql().statement(
+            "SELECT id, name, pin, calibrationA, calibrationB, calibrationC FROM sensors WHERE project_id = ? ORDER BY pin",
+            projectId.getOrDefault(0)
+        ).query().complete(data -> {
             while (data.next()) {
                 sensors.add(new HashMap<>() {{
                     put("id", data.getInt("id"));

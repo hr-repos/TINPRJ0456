@@ -8,8 +8,10 @@ const router = createRouter({
         { path: '/dashboard', name: 'Dashboard', component: () => import('../views/Dashboard.vue') },
         { path: '/history', name: 'History', component: () => import('../views/History.vue') },
         { path: '/projects', name: 'Projects', component: () => import('../views/Projects.vue') },
+        { path: '/project/:project_id', name: 'Project', component: () => import('../views/Project.vue') },
+        { path: '/project/:project_id/history', name: 'Project History', component: () => import('../views/ProjectHistory.vue') },
+        { path: '/project/:project_id/sensors', name: 'Project Sensors', component: () => import('../views/ProjectSensors.vue') },
         { path: '/sensors', name: 'Sensors', component: () => import('../views/Sensors.vue') },
-
         { path: '/:catchAll(.*)', name: 'Error', component: () => import('/src/views/error/404.vue') },
     ]
 });

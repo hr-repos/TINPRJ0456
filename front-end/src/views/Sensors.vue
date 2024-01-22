@@ -1,108 +1,36 @@
 <template>
-    <div class="flex flex-row gap-8">
-        <div class="flex-1">
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-100">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
-                            ID
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Name
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Pin
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Calibration
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="i in sensors" class="bg-white border-b hover:bg-gray-50">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            {{ i.id }}
-                        </th>
-                        <td class="px-6 py-4">
-                            {{ i.name }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ i.pin }}
-                        </td>
-                        <td class="px-6 py-4">
-                            <div v-if="i.calibration_a || i.calibration_b || i.calibration_c">
-                                {{i.calibration_a}}x² + {{i.calibration_b}}x + {{i.calibration_c}}
-                            </div>
-                            <div v-els class="text-red-600 text-xs">Not calibrated</div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="flex flex-col gap-2">
-            <input @keyup.enter="submit" placeholder="Sensor name" type="text" v-model="inputName">
-            <input @keyup.enter="submit" placeholder="Pin number" type="number" v-model="inputPin">
-            <button id="submit" @click="submit">Add sensor</button>
-        </div>
+    <p>Of which project do you want to add or change sensors?</p>
+    <div class="flex items-center">
+        <select name="select_project" id="select_project" v-on:change="changeRoute($event)" class="my-2">
+            <option selected disabled>Select a project</option>
+            <option v-for="project in projects" :value="project.id" v-text="`${project.id}. ${project.name} (${project.sensors.length} sensors)`"></option>
+        </select>
+        <LoadSpinner v-if="loading" class="ml-4"/>
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue"
-import { toast } from 'vue3-toastify'
+<script>
+import LoadSpinner from '../components/LoadSpinner.vue'
 
-export default defineComponent({
-    name: 'Sensors',
+export default {
+    components: { LoadSpinner },
     data() {
         return {
-            sensors: [],
-            inputPin: null,
-            inputName: ''
-        }
+            projects: [],
+            loading: false
+        };
     },
     methods: {
-        async submit() {
-            document.getElementById("submit").disabled = true
-            toast.info('Adding sensor')
-            await fetch('/api/submit-sensor', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    name: this.inputName,
-                    pin: this.inputPin
-                }),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        toast.error(data.error)
-                        return
-                    }
-
-                    this.sensors.push({
-                        id: data.id,
-                        name: this.inputName,
-                        pin: this.inputPin
-                    })
-                    toast.success('Sensor added')
-                    this.inputPin = null
-                    this.inputName = ''
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                })
-                .finally(() => {
-                    document.getElementById("submit").disabled = false
-                });
+        changeRoute(event) {
+            this.loading = true
+            this.$router.push(`/project/${event.target.value}/sensors`)
         }
     },
     async beforeRouteEnter(to, from, next) {
-        const data = await (await fetch('/api/get-sensors')).json()
+        const data = await (await fetch('/api/get-projects')).json()
         next(vm => {
-            vm.sensors = data
+            vm.projects = data
         })
     }
-})
+}
 </script>

@@ -14,48 +14,49 @@
     <hr class="my-8 border-2">
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-800">
             <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                 <tr>
-                    <th scope="col" class="px-6 py-3">
-                        Active
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        ID
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Name
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Description
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Creation date
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Creator
-                    </th>
+                    <th scope="col" class="px-6 py-3">Active</th>
+                    <th scope="col" class="px-6 py-3">ID</th>
+                    <th scope="col" class="px-6 py-3">Name</th>
+                    <th scope="col" class="px-6 py-3">Description</th>
+                    <th scope="col" class="px-6 py-3">Sensors</th>
+                    <th scope="col" class="px-6 py-3">Creation date</th>
+                    <th scope="col" class="px-6 py-3">Creator</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="i in projects" class="bg-white border-b hover:bg-gray-50">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-950 whitespace-nowrap">
                         <input @click="change(i.id)" :checked="i.active" type="radio" id="active_project" name="active_project">
                     </th>
-                    <td class="px-6 py-4">
-                        {{ i.id }}
+                    <td class="px-6 py-4 text-lg font-mono">
+                        <RouterLink :to="`/project/${i.id}`" v-text="i.id"></RouterLink>
                     </td>
                     <td class="px-6 py-4">
-                        {{ i.name }}
+                        <p class="text-lg leading-5 mb-1" v-text="i.name"></p>
+                        <div class="text-[8pt]">
+                            <RouterLink :to="`/project/${i.id}`">Project Page</RouterLink>
+                        </div>
                     </td>
                     <td class="px-6 py-4">
-                        {{ i.description }}
+                        <p v-if="i.description" class="leading-4" v-text="i.description"></p>
+                        <p v-else class="italic text-gray-500">No description provided.</p>
                     </td>
                     <td class="px-6 py-4">
-                        {{ i.creation_date }}
+                        <p class="mb-1" v-text="`${i.sensors.length} total`"></p>
+                        <div class="mb-1">
+                            <p v-for="j in i.sensors" v-text="`${j.name} (pin ${j.pin})`"></p>
+                        </div>
+                        <RouterLink :to="`/project/${i.id}/sensors`" class="text-[8pt]">Add Sensor</RouterLink>
                     </td>
                     <td class="px-6 py-4">
-                        {{ i.creator_name }}
+                        <p v-text="formatDate(i.creation_date)"></p>
+                        <p v-text="formatTime(i.creation_date)"></p>
+                    </td>
+                    <td class="px-6 py-4">
+                        <p v-text="i.creator_name"></p>
                     </td>
                 </tr>
             </tbody>
@@ -76,6 +77,21 @@ export default {
         };
     },
     methods: {
+        formatDate(timestamp) {
+            return new Date(timestamp * 1000).toLocaleString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+            })
+        },
+        formatTime(timestamp) {
+            return new Date(timestamp * 1000).toLocaleString('en-US', {
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                hour12: false,
+            })
+        },
         async change(project_id) {
             toast.info('Changing active project')
 
