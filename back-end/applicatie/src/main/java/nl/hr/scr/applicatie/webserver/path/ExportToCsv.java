@@ -1,15 +1,10 @@
 package nl.hr.scr.applicatie.webserver.path;
 
-import io.javalin.http.ContentType;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
-import me.justeli.esqueleto.UnparsedStatement;
 import nl.hr.scr.applicatie.Main;
 import nl.hr.scr.applicatie.webserver.Webserver;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -37,7 +32,7 @@ public class ExportToCsv
         StringBuilder builder = new StringBuilder();
 
         main.sql().statement("""
-            SELECT d.measure_millis, d.value, s.name
+            SELECT FROM_UNIXTIME(d.measure_millis / 1000) AS date, d.value, s.name
             FROM data d
                 JOIN sensors s ON d.sensor_id = s.id
             WHERE s.project_id = ?
