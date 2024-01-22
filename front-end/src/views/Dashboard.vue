@@ -37,13 +37,14 @@ export default defineComponent({
             this.testing = !this.testing
             if (this.testing) {
                 this.fakeDataInterval = setInterval(() => {
-                    fetch('/api/sensors', {
+                    fetch('/api/submit-sensor-data', {
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({
-                            inputNH3: Math.floor(Math.random() * 100 + 200),
-                            outputNH3: Math.floor(Math.random() * 100 + 200)
-                        }),
+                        body: JSON.stringify({"data": [
+                            Math.floor(Math.random() * 100 + 200),
+                            Math.floor(Math.random() * 100 + 200),
+                            Math.floor(Math.random() * 100 + 200)
+                        ]}),
                     })
                         .then(response => console.log('sent'))
                 }, 200)
