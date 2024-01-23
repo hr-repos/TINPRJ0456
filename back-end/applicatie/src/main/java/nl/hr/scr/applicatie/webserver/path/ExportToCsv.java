@@ -56,13 +56,15 @@ public class ExportToCsv
         }
 
         List<String> sensorQueries = new ArrayList<>();
+        List<String> sensorSqlNames = new ArrayList<>();
         List<String> sensorNames = new ArrayList<>();
 
         for (Sensor sensor : sensors) {
             sensorQueries.add(
                 "MAX(CASE WHEN sensor_id = " + sensor.id() + " THEN value END) AS sensor" + sensor.id()
             );
-            sensorNames.add("sensor" + sensor.id());
+            sensorSqlNames.add("sensor" + sensor.id());
+            sensorNames.add(sensor.name().replaceAll("[^a-zA-Z0-9]+", " "));
         }
 
         List<String> csv = new ArrayList<>();
@@ -76,7 +78,7 @@ public class ExportToCsv
             while (data.next()) {
                 StringBuilder row = new StringBuilder();
                 row.append(data.getString("date")).append(";");
-                for (String sensorName : sensorNames) {
+                for (String sensorName : sensorSqlNames) {
                     row.append(data.getInt(sensorName)).append(";");
                 }
                 row.deleteCharAt(row.length() - 1);
