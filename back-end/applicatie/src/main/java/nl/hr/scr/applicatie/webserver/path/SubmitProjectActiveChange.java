@@ -29,6 +29,7 @@ public class SubmitProjectActiveChange
         ).update().complete();
 
         main.cache().updateActiveProjectId(activeProject);
+        main.post().sendFrequency();
 
         context.json(Map.of(
             "updated", activeProject

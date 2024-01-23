@@ -13,7 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /* Eli @ September 30, 2023 (nl.hr.scr.applicatie.config) */
-public record Config(SqlConfig sql, WebserverConfig webserver)
+public record Config(SqlConfig sql, WebserverConfig webserver, GpioConfig gpio)
 {
     public static final Logger LOGGER = LoggerFactory.getLogger(Main.class.getSimpleName());
 

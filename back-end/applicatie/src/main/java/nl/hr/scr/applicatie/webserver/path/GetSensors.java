@@ -1,7 +1,6 @@
 package nl.hr.scr.applicatie.webserver.path;
 
 import io.javalin.http.Context;
-import io.javalin.http.HttpStatus;
 import nl.hr.scr.applicatie.Main;
 import nl.hr.scr.applicatie.webserver.Webserver;
 

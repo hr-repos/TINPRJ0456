@@ -5,6 +5,7 @@ import me.justeli.esqueleto.driver.MariaDBDriver;
 import nl.hr.scr.applicatie.cache.SensorCache;
 import nl.hr.scr.applicatie.config.Config;
 import nl.hr.scr.applicatie.database.CreateTables;
+import nl.hr.scr.applicatie.util.PostUtil;
 import nl.hr.scr.applicatie.webserver.Webserver;
 import nl.hr.scr.applicatie.webserver.path.*;
 import org.slf4j.Logger;
@@ -22,6 +23,7 @@ public final class Main {
     private Esqueleto sql;
     private Webserver webserver;
     private SensorCache cache;
+    private PostUtil post;
 
     public void onEnable() {
         this.config = Config.parse("config.yml");
@@ -41,7 +43,9 @@ public final class Main {
 
         // database
         new CreateTables(this);
+
         this.cache = new SensorCache(this);
+        this.post = new PostUtil(this);
 
         // webserver
         this.webserver = new Webserver(this);
@@ -57,6 +61,9 @@ public final class Main {
         new SubmitProjectActiveChange(this.webserver, this);
         new SubmitSensor(this.webserver, this);
         new SubmitSensorData(this.webserver, this);
+
+        // send frequency to gpio
+        this.post.sendFrequency();
     }
 
     public void onDisable() {
@@ -78,6 +85,10 @@ public final class Main {
 
     public SensorCache cache() {
         return cache;
+    }
+
+    public PostUtil post() {
+        return post;
     }
 
     public static void main(String... args) {
