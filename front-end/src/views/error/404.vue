@@ -1,5 +1,11 @@
 <template>
-    <div class="text-2xl text-red-800">
-        Page not found
-    </div>
+    <WarningMessage warning="Page not found." description="Return to the home page here." link="/" />
 </template>
+
+<script>
+import WarningMessage from '@/components/WarningMessage.vue'
+
+export default {
+    components: { WarningMessage }
+}
+</script>

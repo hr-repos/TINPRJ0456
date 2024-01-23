@@ -68,16 +68,15 @@
             </tbody>
         </table>
     </div>
-    <div v-else>
-        <p class="font-bold">No projects found.</p>
-        <p>Create a new project above here.</p>
-    </div>
+    <WarningMessage v-else warning="No projects found." description="Create a new project above here." />
 </template>
 
 <script>
 import { toast } from 'vue3-toastify'
+import WarningMessage from '@/components/WarningMessage.vue'
 
 export default {
+    components: { WarningMessage },
     data() {
         return {
             inputName: '',

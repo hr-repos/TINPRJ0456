@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row gap-8">
+    <div v-if="project && project.id" class="flex flex-row gap-8">
         <div class="flex-1">
             <div v-if="sensors.length > 0" class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -26,10 +26,7 @@
                     </tbody>
                 </table>
             </div>
-            <div v-else>
-                <p class="font-bold">No sensors found for this project.</p>
-                <p>Add a sensor on the right.</p>
-            </div>
+            <WarningMessage v-else warning="No sensors found for this project." description="Add a sensor on the right." />
         </div>
         <div class="flex flex-col gap-2">
             <input @keyup.enter="submit" placeholder="Sensor name" type="text" v-model="inputName">
@@ -37,17 +34,21 @@
             <button id="submit" @click="submit">Add sensor</button>
         </div>
     </div>
+    <WarningMessage v-else-if="project" warning="Project not found." description="Register a new project here." link="/projects" />
 </template>
 
 <script>
 import { toast } from 'vue3-toastify'
+import WarningMessage from '@/components/WarningMessage.vue'
 
 export default {
+    components: { WarningMessage },
     data() {
         return {
             sensors: [],
             inputPin: null,
-            inputName: ''
+            inputName: '',
+            project: null
         }
     },
     methods: {
@@ -90,7 +91,8 @@ export default {
     async beforeRouteEnter(to, from, next) {
         const data = await (await fetch('/api/get-sensors/' + to.params.project_id)).json()
         next(vm => {
-            vm.sensors = data
+            vm.sensors = data.sensors
+            vm.project = data.project
         })
     }
 }

@@ -1,21 +1,27 @@
 <template>
     <div v-if="project && project.name">
-        <div class="flex justify-between mb-3">
-            <p>
-                <span>Current project: </span>
-                <span class="font-bold" v-text="`${project.id}. ${project.name}`"></span>
-            </p>
-            <p>
-                <RouterLink to="/projects">Change active project</RouterLink>
-                &bull;
-                <RouterLink :to="`/project/${project.id}/sensors`">Add sensors</RouterLink>
-            </p>
-        </div>
-        <div v-if="project.sensors.length > 0" class="grid grid-cols-4 gap-4">
-            <BorderBlock v-for="i in project.sensors" :name="`${i.name} (pin ${i.pin})`" :title="sensorData[i.pin]" />
-        </div>
-        <div v-else>
-            <p>No sensors found for this project: <RouterLink :to="`/project/${project.id}/sensors`">Add sensors</RouterLink></p>
+        <div class="grid grid-cols-4 gap-4">
+            <div>
+                <p class="text-sm">Active project</p>
+                <RouterLink :to="`/project/${project.id}`"
+                            class="font-bold" v-text="project.name + ' (id: ' + project.id + ')'"></RouterLink>
+                <div class="flex flex-row gap-2 mt-2 text-sm">
+                    <RouterLink class="router-button" to="/projects">Change project</RouterLink>
+                    <RouterLink class="router-button" :to="`/project/${project.id}/sensors`">Add sensors</RouterLink>
+                </div>
+            </div>
+            <div class="col-span-3">
+                <div v-if="project.sensors.length > 0" class="grid grid-cols-4 gap-4">
+                    <BorderBlock v-for="i in project.sensors"
+                                 :name="i.name"
+                                 :pin="i.pin"
+                                 :title="sensorData[i.pin]" />
+                </div>
+                <WarningMessage v-else
+                                warning="No sensors found for this project."
+                                description="Add sensors here."
+                                :link="`/project/${project.id}/sensors`" />
+            </div>
         </div>
         <div class="chart block">
             <LineChart title="chart" :inputNH3="inputNH3Array" :outputNH3="outputNH3Array"/>
@@ -25,18 +31,17 @@
             <button @click="test" v-else>Enable testing</button>
         </div>
     </div>
-    <div v-else>
-        <p>No active project found: <RouterLink to="/projects">Change active project</RouterLink></p>
-    </div>
+    <WarningMessage v-else warning="No active project found." description="Change active project here." link="/projects" />
 </template>
 
 <script>
 import emitter from '@/router/emitter'
 import BorderBlock from '@/components/BorderBlock.vue'
 import LineChart from '@/components/LineChart.vue'
+import WarningMessage from '@/components/WarningMessage.vue'
 
 export default {
-    components: { LineChart, BorderBlock },
+    components: { WarningMessage, LineChart, BorderBlock },
     methods: {
         test() {
             this.testing = !this.testing

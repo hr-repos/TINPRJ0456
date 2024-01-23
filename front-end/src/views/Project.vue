@@ -1,5 +1,5 @@
 <template>
-    <div v-if="project" class="flex flex-row">
+    <div v-if="project && project.id" class="flex flex-row">
         <div class="flex-1 flex flex-col gap-4">
             <div class="text-4xl">
                 <span class="font-bold" v-text="project.name"></span>
@@ -29,15 +29,17 @@
             <button @click="exportCsv">Export all data to CSV</button>
         </div>
     </div>
+    <WarningMessage v-else-if="project" warning="Project not found." description="Register a new project here." link="/projects" />
 </template>
 
 <script>
 import LoadSpinner from '../components/LoadSpinner.vue'
 import BorderBlock from '@/components/BorderBlock.vue'
 import {toast} from "vue3-toastify";
+import WarningMessage from '@/components/WarningMessage.vue'
 
 export default {
-    components: { BorderBlock, LoadSpinner },
+    components: { WarningMessage, BorderBlock, LoadSpinner },
     data() {
         return {
             project: null,
@@ -63,7 +65,7 @@ export default {
                     const link = document.createElement('a')
 
                     link.href = window.URL.createObjectURL(blob)
-                    link.download = `export-${this.project.name.toLowerCase().replace(/[^a-z0-9_\-]/g, '')}.csv`
+                    link.download = `export-${this.project.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.csv`
                     document.body.appendChild(link)
                     link.click()
                     document.body.removeChild(link)

@@ -20,8 +20,8 @@ public class GetSensors {
 
     public void handle(Context context) {
         var projectId = context.pathParamAsClass("project_id", Integer.class);
-        List<Map<String, Object>> sensors = new ArrayList<>();
 
+        List<Map<String, Object>> sensors = new ArrayList<>();
         main.sql().statement(
             "SELECT id, name, pin, calibrationA, calibrationB, calibrationC FROM sensors WHERE project_id = ? ORDER BY pin",
             projectId.getOrDefault(0)
@@ -38,6 +38,25 @@ public class GetSensors {
             }
         });
 
-        context.json(sensors);
+        Map<String, Object> project = new HashMap<>();
+        main.sql().statement(
+            "SELECT id, name, creation_unix, description, creator_name, frequency, active FROM projects WHERE id = ?",
+            projectId.getOrDefault(0)
+        ).query().complete(data -> {
+            if (data.next()) {
+                project.put("id", data.getInt("id"));
+                project.put("name", data.getString("name"));
+                project.put("creation_date", data.getLong("creation_unix"));
+                project.put("description", data.getString("description"));
+                project.put("creator_name", data.getString("creator_name"));
+                project.put("frequency", data.getInt("frequency"));
+                project.put("active", data.getBoolean("active"));
+            }
+        });
+
+        context.json(Map.of(
+            "sensors", sensors,
+            "project", project
+        ));
     }
 }

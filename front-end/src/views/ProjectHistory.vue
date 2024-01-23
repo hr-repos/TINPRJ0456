@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="project && project.id">
         <div class="input-container">
             <DateTimeRangePicker/>
         </div>
@@ -26,21 +26,25 @@
             </li>
         </ul>
     </div>
+    <WarningMessage v-else-if="project" warning="Project not found." description="Register a new project here." link="/projects" />
 </template>
 
 <script>
 import DateTimeRangePicker from '../components/DateTimePicker.vue'
 import LineChart from '../components/LineChart.vue'
 import HistoryChart from '../components/HistoryChart.vue'
+import WarningMessage from '@/components/WarningMessage.vue'
 
 export default {
     components: {
+        WarningMessage,
         DateTimeRangePicker,
         LineChart,
         HistoryChart
     },
     data() {
         return {
+            project: null,
             inputNH3: [], // Replace with actual data
             outputNH3: [], // Replace with actual data
             min: 0,
