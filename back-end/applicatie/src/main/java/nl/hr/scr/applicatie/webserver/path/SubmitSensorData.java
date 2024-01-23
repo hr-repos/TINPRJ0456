@@ -28,6 +28,8 @@ public final class SubmitSensorData {
             return;
         }
 
+        long millis = System.currentTimeMillis();
+
         List<Integer> list = dataValidator.get().data();
         for (int i = 0; i < list.size(); i++)
         {
@@ -35,9 +37,10 @@ public final class SubmitSensorData {
                 continue;
 
             main.sql().statement(
-                "INSERT INTO data (sensor_id, value) VALUES (?, ?)",
+                "INSERT INTO data (sensor_id, value, measure_millis) VALUES (?, ?, ?)",
                 main.cache().getActiveSensors().get(i),
-                list.get(i)
+                list.get(i),
+                millis
             ).update().queue();
         }
 

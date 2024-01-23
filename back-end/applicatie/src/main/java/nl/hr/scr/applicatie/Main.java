@@ -6,15 +6,7 @@ import nl.hr.scr.applicatie.cache.SensorCache;
 import nl.hr.scr.applicatie.config.Config;
 import nl.hr.scr.applicatie.database.CreateTables;
 import nl.hr.scr.applicatie.webserver.Webserver;
-import nl.hr.scr.applicatie.webserver.path.ExportToCsv;
-import nl.hr.scr.applicatie.webserver.path.GetProject;
-import nl.hr.scr.applicatie.webserver.path.Ping;
-import nl.hr.scr.applicatie.webserver.path.GetProjects;
-import nl.hr.scr.applicatie.webserver.path.SubmitProjectActiveChange;
-import nl.hr.scr.applicatie.webserver.path.SubmitSensorData;
-import nl.hr.scr.applicatie.webserver.path.GetSensors;
-import nl.hr.scr.applicatie.webserver.path.SubmitProject;
-import nl.hr.scr.applicatie.webserver.path.SubmitSensor;
+import nl.hr.scr.applicatie.webserver.path.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,6 +48,7 @@ public final class Main {
 
         // register api through constructor
         new ExportToCsv(this.webserver, this);
+        new GetFrequency(this.webserver, this);
         new GetProject(this.webserver, this);
         new GetProjects(this.webserver, this);
         new GetSensors(this.webserver, this);

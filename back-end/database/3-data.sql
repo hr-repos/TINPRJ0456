@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS data (
-    measure_millis BIGINT             NOT NULL DEFAULT ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000),
+    measure_millis BIGINT             NOT NULL,
     sensor_id      MEDIUMINT UNSIGNED NOT NULL,
-    value          DECIMAL(9, 3)      NOT NULL DEFAULT 0,
+    value          SMALLINT UNSIGNED  NOT NULL,
 
     CONSTRAINT foreign_key_data_sensor_id FOREIGN KEY (sensor_id) REFERENCES sensors (id)
 );
