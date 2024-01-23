@@ -34,6 +34,7 @@
 <script>
 import LoadSpinner from '../components/LoadSpinner.vue'
 import BorderBlock from '@/components/BorderBlock.vue'
+import {toast} from "vue3-toastify";
 
 export default {
     components: { BorderBlock, LoadSpinner },
@@ -54,23 +55,25 @@ export default {
                 hour12: false,
             })
         },
-        exportCsv() {
-            const csv = [
-                ['id', 'name', 'pin']
-            ]
+        async exportCsv() {
+            try {
+                const response = await fetch('/api/export-to-csv/' + this.project.id)
+                if (response.ok) {
+                    const blob = await response.blob()
+                    const link = document.createElement('a')
 
-            this.project.sensors.forEach(sensor => {
-                csv.push([sensor.id, sensor.name, sensor.pin])
-            })
-
-            const csvContent = "data:text/csv;charset=utf-8," + csv.map(e => e.join(",")).join("\n");
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `project-${this.project.id}.csv`);
-            document.body.appendChild(link); // Required for FF
-
-            link.click();
+                    link.href = window.URL.createObjectURL(blob)
+                    link.download = `export-${this.project.name.toLowerCase().replace(/[^a-z0-9_\-]/g, '')}.csv`
+                    document.body.appendChild(link)
+                    link.click()
+                    document.body.removeChild(link)
+                } else {
+                    const data = await response.json()
+                    toast.error('Download failed: ' + data.error)
+                }
+            } catch (error) {
+                toast.error('Download failed: ' + error)
+            }
         }
     },
     async beforeRouteEnter(to, from, next) {
