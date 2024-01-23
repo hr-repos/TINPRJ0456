@@ -29,5 +29,6 @@ public class GetFrequency
         }
 
         context.json(Map.of("frequency", frequency.get()));
+        Main.LOGGER.info("Frequency was given through GET request.");
     }
 }

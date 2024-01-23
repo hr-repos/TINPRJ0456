@@ -3,6 +3,7 @@ package nl.hr.scr.applicatie.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.hr.scr.applicatie.Main;
+import org.jetbrains.annotations.Nullable;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -25,7 +26,8 @@ public class PostUtil {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    public static HttpResponse<String> postRequest(String url, Object body) {
+    public static @Nullable HttpResponse<String> postRequest(String url, Object body)
+    throws InterruptedException, ExecutionException {
         CompletableFuture<HttpResponse<String>> responseFuture;
 
         try (HttpClient httpClient = HttpClient.newHttpClient()) {
@@ -44,12 +46,7 @@ public class PostUtil {
             throw new RuntimeException(e);
         }
 
-        try {
-            return responseFuture.get();
-        }
-        catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
-        }
+        return responseFuture.get();
     }
 
     private static HttpRequest.BodyPublisher buildBodyPublisher(String jsonBody) {
@@ -65,9 +62,13 @@ public class PostUtil {
             "SELECT frequency FROM projects WHERE active = TRUE LIMIT 1"
         ).query().complete(data -> data.next()? data.getInt("frequency") : null);
 
-        postRequest(
-            "http://localhost:" + main.config().gpio().port() + "/submit-frequency",
-            Map.of("frequency", frequency.orElse(0))
-        );
+        try {
+            postRequest(
+                "http://localhost:" + main.config().gpio().port() + "/submit-frequency",
+                Map.of("frequency", frequency.orElse(0))
+            );
+        } catch (InterruptedException | ExecutionException e) {
+            Main.LOGGER.warn("Could not send frequency. GPIO will have to get frequency by GET request.");
+        }
     }
 }
