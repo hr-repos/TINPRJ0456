@@ -10,7 +10,7 @@ def send_data(sensor_list : list):
     data = {"data": sensor_list}
     json_data = json.dumps(data)
     
-    response = requests.post(URL, json_data)
+    response = requests.post(URL_post, json_data)
 
     if response.status_code != 200:
         print(f'Failed to send data: {response.status_code} - {response.text}')
@@ -18,7 +18,7 @@ def send_data(sensor_list : list):
     return response.status_code
 
 def get_frequency():
-    get_json = requests.get(URL).json()
+    get_json = requests.get(URL_get).json()
     return get_json['frequency']
         
 if __name__ == '__main__':

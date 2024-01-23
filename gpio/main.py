@@ -5,7 +5,11 @@ from server import post_freq
 import RPi.GPIO as GPIO
 import requests
 
-sleep_time = get_frequency()
+try:
+    sleep_time : int = get_frequency()
+except:
+    print("connection error failed to connect to localhost")
+    sleep_time = "NULL"
 
 while True:
     #sensor_data is an 8 element list with the 8 inputvalues of the ads1 abs2
@@ -28,7 +32,8 @@ while True:
     print()
     
         
-    if(post_freq != "NULL"):
-        sleep_time = post_freq
+    if(post_freq != "NULL"): #if a post is send with a frequency use that frequency
+        sleep_time : int = post_freq
         
-    sleep(sleep_time / 1000)
+    if(sleep_time != "NULL"): #if get_frequency didn't workl   
+        sleep(sleep_time / 1000)
