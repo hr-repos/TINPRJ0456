@@ -67,8 +67,8 @@ const navigation = [
     { name: 'Home', to: '/' },
     { name: 'Dashboard', to: '/dashboard' },
     { name: 'Projects', to: '/projects' },
-    { name: 'History', to: '/history' },
     { name: 'Sensors', to: '/sensors' },
+    // { name: 'History', to: '/history' },
 ]
 
 export default defineComponent({

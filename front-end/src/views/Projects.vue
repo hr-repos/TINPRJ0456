@@ -103,7 +103,7 @@ export default {
             })
         },
         async change(project_id) {
-            toast.info('Changing active project')
+            const t = toast.info('Changing active project')
 
             await fetch('/api/submit-project-active-change', {
                 method: 'POST',
@@ -113,10 +113,12 @@ export default {
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
+                        toast.remove(t)
                         toast.error(data.error)
                         return
                     }
 
+                    toast.remove(t)
                     toast.success('Changed active project')
                 })
                 .catch(error => {
@@ -125,7 +127,7 @@ export default {
         },
         async submit() {
             document.getElementById("submit").disabled = true
-            toast.info('Adding project')
+            const t = toast.info('Adding project')
             await fetch('/api/submit-project', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -140,6 +142,7 @@ export default {
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
+                        toast.remove(t)
                         toast.error(data.error)
                         return
                     }
@@ -154,6 +157,7 @@ export default {
                         active: false,
                         sensors: []
                     })
+                    toast.remove(t)
                     toast.success('Project added')
                     this.inputName = ''
                     this.inputDescription = ''

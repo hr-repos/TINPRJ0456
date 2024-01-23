@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS sensors (
     calibrationB FLOAT DEFAULT NULL,
     calibrationC FLOAT DEFAULT NULL,
 
-    CONSTRAINT foreign_key_sensors_project_id FOREIGN KEY (project_id) REFERENCES projects (id),
+    CONSTRAINT foreign_key_sensors_project_id FOREIGN KEY (project_id) REFERENCES projects (id) ON DELETE CASCADE ON UPDATE CASCADE,
 
     CHECK (pin BETWEEN 0 AND 7), -- 8 pins on ADC
     UNIQUE (pin, project_id) -- every pin can be used only once in a project

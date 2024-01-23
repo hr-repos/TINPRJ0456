@@ -30,7 +30,7 @@ public final class CreateTables
                 calibrationB FLOAT DEFAULT NULL,
                 calibrationC FLOAT DEFAULT NULL,
             
-                CONSTRAINT foreign_key_sensors_project_id FOREIGN KEY (project_id) REFERENCES projects (id),
+                CONSTRAINT foreign_key_sensors_project_id FOREIGN KEY (project_id) REFERENCES projects (id) ON DELETE CASCADE ON UPDATE CASCADE,
             
                 CHECK (pin BETWEEN 0 AND 7),
                 UNIQUE (pin, project_id)
@@ -41,11 +41,11 @@ public final class CreateTables
 
         main.sql().statement("""
             CREATE TABLE IF NOT EXISTS data (
-                measure_millis BIGINT             NOT NULL DEFAULT ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000),
+                measure_millis BIGINT             NOT NULL,
                 sensor_id      MEDIUMINT UNSIGNED NOT NULL,
-                value          DECIMAL(9, 3)      NOT NULL DEFAULT 0,
+                value          SMALLINT UNSIGNED  NOT NULL,
             
-                CONSTRAINT foreign_key_data_sensor_id FOREIGN KEY (sensor_id) REFERENCES sensors (id)
+                CONSTRAINT foreign_key_data_sensor_id FOREIGN KEY (sensor_id) REFERENCES sensors (id) ON DELETE CASCADE ON UPDATE CASCADE
             )
             """).update().complete();
 

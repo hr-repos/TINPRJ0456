@@ -29,6 +29,11 @@
             <WarningMessage v-else warning="No sensors found for this project." description="Add a sensor on the right." />
         </div>
         <div class="flex flex-col gap-2">
+            <div class="mb-2">
+                <p class="text-sm">Selected project</p>
+                <RouterLink :to="`/project/${project.id}`"
+                            class="font-bold" v-text="project.name + ' (id: ' + project.id + ')'"></RouterLink>
+            </div>
             <input @keyup.enter="submit" placeholder="Sensor name" type="text" v-model="inputName">
             <input @keyup.enter="submit" placeholder="Pin number" type="number" v-model="inputPin">
             <button id="submit" @click="submit">Add sensor</button>
@@ -54,7 +59,7 @@ export default {
     methods: {
         async submit() {
             document.getElementById("submit").disabled = true
-            toast.info('Adding sensor')
+            const t = toast.info('Adding sensor')
             await fetch('/api/submit-sensor', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -67,6 +72,7 @@ export default {
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
+                        toast.remove(t)
                         toast.error(data.error)
                         return
                     }
@@ -76,6 +82,7 @@ export default {
                         name: this.inputName,
                         pin: this.inputPin
                     })
+                    toast.remove(t)
                     toast.success('Sensor added')
                     this.inputPin = null
                     this.inputName = ''

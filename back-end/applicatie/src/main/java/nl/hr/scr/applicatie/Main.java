@@ -51,6 +51,7 @@ public final class Main {
         this.webserver = new Webserver(this);
 
         // register api through constructor
+        new DeleteProject(this.webserver, this);
         new ExportToCsv(this.webserver, this);
         new GetFrequency(this.webserver, this);
         new GetProject(this.webserver, this);
