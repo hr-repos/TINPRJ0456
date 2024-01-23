@@ -3,8 +3,8 @@ import requests
 import json
 from random import randint
 
-URL = 'http://localhost:8080/api/sensors'
-
+URL_post    = 'http://localhost:8080/api/sensors'
+URL_get     = 'http://localhost:8080/get-frequency'
 
 def send_data(sensor_list : list):
     data = {"data": sensor_list}

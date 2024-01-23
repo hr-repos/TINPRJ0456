@@ -4,7 +4,7 @@ post_freq = "NULL"
 
 app = Flask(__name__)
 
-app.run(debug=True, port=8090)
+app.run(host="localhost" ,debug=True, port=8090)
 
 @app.route('/', methods=['submit-frequeny'])
 def result():
