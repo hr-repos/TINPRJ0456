@@ -8,7 +8,7 @@ import threading
 
 def main_func():
     is_error_send = False
-
+    
     try:
         sleep_time : int = get_frequency()
         print("get is : " + sleep_time)
@@ -19,13 +19,19 @@ def main_func():
         sleep_time = 1000
 
     while True:
+        
+        
         #sensor_data is an 8 element list with the 8 inputvalues of the ads1 abs2
         #where [ads1:a0, ads1:a1, ads1:a2, ads1:a3, ads2:a0, ads2:a1, ads2:a2, ads2:a3]
         
         #or in the code noted as:
         #    [a0,a1,a2,a3,a4,a5,a6,a7]
-
-        sensors_data : list = read_sensor_data() 
+        try:
+            sensors_data : list = read_sensor_data() 
+        except:
+            sensors_data : list = [0,0,0,0,0,0,0,0]
+            print("could not read sensor data")
+            continue
         
         try:
             send_data(sensors_data)
@@ -40,14 +46,15 @@ def main_func():
             print(i,": ", end="")
             print(data , end=", ")
         print()
-
+        
+            
         if(post_freq != 0):  #if a post is send with a frequency use that frequency
             sleep_time : int = post_freq
             
         if(sleep_time != 0): #if get_frequency didn't work  
             sleep(sleep_time / 1000)
-
-server = threading.Thread(target= app.run(host="0.0.0.0" ,debug=False, port=8090) )
+            
+server = threading.Thread(target=app.run(host="0.0.0.0" ,debug=False, port=8090))
 main   = threading.Thread(target=main_func)
 server.start()
 main.start()
