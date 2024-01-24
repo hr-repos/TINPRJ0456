@@ -1,6 +1,5 @@
 package nl.hr.scr.applicatie.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.hr.scr.applicatie.Main;
 
@@ -14,7 +13,6 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 public class PostUtil {
@@ -71,7 +69,7 @@ public class PostUtil {
             Main.LOGGER.info("Sent frequency {}: {}", data.statusCode(), data.body());
         } catch (InterruptedException | ExecutionException | IOException e) {
             Main.LOGGER.warn(
-                "Could not send frequency. GPIO will have to get frequency by POST request: {}",
+                "Could not send frequency. GPIO will have to get frequency by GET request: {}",
                 e.getMessage()
             );
         }
