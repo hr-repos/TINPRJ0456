@@ -17,9 +17,7 @@ def try_get_freq():
         sleep_time : int = get_frequency()
         print("Received frequency is: " + str(sleep_time) + "ms")
     except:
-        if not is_error_send:
-            print("Connection error: failed to connect to localhost")
-            is_error_send = True
+        print("Connection error: failed to connect to localhost")
             
     return sleep_time
 
@@ -38,15 +36,16 @@ def main_func(freq : int):
         #    [a0,a1,a2,a3,a4,a5,a6,a7]
         try:
             sensors_data : list = read_sensor_data() 
+            sens_error_send = False
         except:
             sensors_data : list = [0,0,0,0,0,0,0,0]
             if not sens_error_send:
                 print("could not read sensor data")
                 sens_error_send = True
-            continue
         
         try:
             send_data(sensors_data)
+            is_error_send = False
         except requests.ConnectionError:
             if not is_error_send:
                 print("connection error failed to connect to localhost")
