@@ -58,6 +58,7 @@ public final class Main {
         new GetProjects(this.webserver, this);
         new GetSensors(this.webserver, this);
         new Ping(this.webserver);
+        new SubmitCalibration(this.webserver, this);
         new SubmitProject(this.webserver, this);
         new SubmitProjectActiveChange(this.webserver, this);
         new SubmitSensor(this.webserver, this);

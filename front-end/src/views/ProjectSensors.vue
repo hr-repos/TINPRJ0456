@@ -10,6 +10,7 @@
                         <th scope="col" class="px-6 py-3">Pin</th>
                         <th scope="col" class="px-6 py-3">Unit</th>
                         <th scope="col" class="px-6 py-3">Calibration</th>
+                        <th scope="col" class="px-6 py-3">Calibration formula</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -19,10 +20,14 @@
                         <td class="px-6 py-4" v-text="i.pin"></td>
                         <td class="px-6 py-4" v-text="i.unit"></td>
                         <td class="px-6 py-4">
-                            <div v-if="i.calibration.calibrated">
-                                {{i.calibration.a}}x² + {{i.calibration.b}}x + {{i.calibration.c}}
-                            </div>
-                            <div v-else class="text-red-600 text-xs">Not calibrated</div>
+                            <div v-if="!i.calibration.calibrated" class="text-red-600 text-xs">Not calibrated</div>
+                            <div v-else class="text-green-800 text-xs">Calibrated</div>
+                        </td>
+                        <td class="px-6 py-4 font-serif">
+                            <span><i>y</i> = </span>
+                            <input type="text" class="w-20 ring-1 px-0.5" :value="i.calibration.b" @blur="updateCalibration($event, i, 'b')">
+                            <span> <i>x</i> + </span>
+                            <input type="text" class="w-20 ring-1 px-0.5" :value="i.calibration.c" @blur="updateCalibration($event, i, 'c')">
                         </td>
                     </tr>
                     </tbody>
@@ -61,6 +66,36 @@ export default {
         }
     },
     methods: {
+        async updateCalibration(event, sensor, type) {
+            const t = toast.info('Updating calibration...')
+            await fetch('/api/submit-calibration', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    sensorId: sensor.id,
+                    a: type === 'a' ? event.target.value : sensor.calibration.a,
+                    b: type === 'b' ? event.target.value : sensor.calibration.b,
+                    c: type === 'c' ? event.target.value : sensor.calibration.c,
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        toast.remove(t)
+                        toast.error(data.error)
+                        event.target.value = sensor.calibration[type]
+                        return
+                    }
+
+                    sensor.calibration[type] = event.target.value
+                    sensor.calibration.calibrated = sensor.calibration.a != 0 || sensor.calibration.b != 1 || sensor.calibration.c != 0
+                    toast.remove(t)
+                    toast.success('Calibration updated')
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                })
+        },
         async submit() {
             document.getElementById("submit").disabled = true
             const t = toast.info('Adding sensor')
