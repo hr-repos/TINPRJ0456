@@ -1,7 +1,7 @@
 from time import sleep
 from adc_reader import read_sensor_data
 from send_data_to_localhost import send_data, get_frequency
-from server import post_freq, start_server
+from server import post_freq, app
 import RPi.GPIO as GPIO
 import requests
 import threading
@@ -16,7 +16,7 @@ def main_func():
         if not is_error_send:
             print("connection error failed to connect to localhost")
             is_error_send = True
-        sleep_time = "NULL"
+        sleep_time = 1000
 
     while True:
         #sensor_data is an 8 element list with the 8 inputvalues of the ads1 abs2
@@ -24,6 +24,7 @@ def main_func():
         
         #or in the code noted as:
         #    [a0,a1,a2,a3,a4,a5,a6,a7]
+
         sensors_data : list = read_sensor_data() 
         
         try:
@@ -39,15 +40,14 @@ def main_func():
             print(i,": ", end="")
             print(data , end=", ")
         print()
-        
-            
-        if(post_freq != "NULL"):  #if a post is send with a frequency use that frequency
+
+        if(post_freq != 0):  #if a post is send with a frequency use that frequency
             sleep_time : int = post_freq
             
-        if(sleep_time != "NULL"): #if get_frequency didn't work  
+        if(sleep_time != 0): #if get_frequency didn't work  
             sleep(sleep_time / 1000)
-            
-server = threading.Thread(target=start_server)
+
+server = threading.Thread(target= app.run(host="0.0.0.0" ,debug=False, port=8090) )
 main   = threading.Thread(target=main_func)
 server.start()
 main.start()

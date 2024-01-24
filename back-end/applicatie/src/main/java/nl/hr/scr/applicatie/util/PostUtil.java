@@ -3,8 +3,8 @@ package nl.hr.scr.applicatie.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.hr.scr.applicatie.Main;
-import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -26,9 +26,9 @@ public class PostUtil {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    public static @Nullable HttpResponse<String> postRequest(String url, Object body)
-    throws InterruptedException, ExecutionException {
-        CompletableFuture<HttpResponse<String>> responseFuture;
+    public static HttpResponse<String> postRequest(String url, Object body)
+    throws InterruptedException, ExecutionException, IOException {
+        HttpResponse<String> response;
 
         try (HttpClient httpClient = HttpClient.newHttpClient()) {
             HttpRequest request = HttpRequest.newBuilder()
@@ -38,15 +38,13 @@ public class PostUtil {
                 .timeout(Duration.of(100, ChronoUnit.MILLIS))
                 .build();
 
-            responseFuture = httpClient.sendAsync(
+            response = httpClient.send(
                 request,
                 HttpResponse.BodyHandlers.ofString()
             );
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
         }
 
-        return responseFuture.get();
+        return response;
     }
 
     private static HttpRequest.BodyPublisher buildBodyPublisher(String jsonBody) {
@@ -62,13 +60,20 @@ public class PostUtil {
             "SELECT frequency FROM projects WHERE active = TRUE LIMIT 1"
         ).query().complete(data -> data.next()? data.getInt("frequency") : null);
 
+        String url = "http://localhost:" + main.config().gpio().port() + "/submit-frequency";
         try {
-            postRequest(
-                "http://localhost:" + main.config().gpio().port() + "/submit-frequency",
+            Main.LOGGER.info("Sending frequency of {}ms to {}", frequency.orElse(0), url);
+            var data = postRequest(
+                url,
                 Map.of("frequency", frequency.orElse(0))
             );
-        } catch (InterruptedException | ExecutionException e) {
-            Main.LOGGER.warn("Could not send frequency. GPIO will have to get frequency by GET request.");
+
+            Main.LOGGER.info("Sent frequency {}: {}", data.statusCode(), data.body());
+        } catch (InterruptedException | ExecutionException | IOException e) {
+            Main.LOGGER.warn(
+                "Could not send frequency. GPIO will have to get frequency by POST request: {}",
+                e.getMessage()
+            );
         }
     }
 }

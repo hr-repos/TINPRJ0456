@@ -1,0 +1,18 @@
+Press CTRL+C to quit
+received submit-frequency
+freq had been updated to: 5000
+[2024-01-24 12:46:59,858] ERROR in app: Exception on /submit-frequency [POST]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1823, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1842, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2134, in make_response
+    raise TypeError(
+TypeError: The view function for 'result' did not return a valid response. The function either returned None or ended without a return statement.
+127.0.0.1 - - [24/Jan/2024 12:46:59] "POST /submit-frequency HTTP/1.1" 500 -

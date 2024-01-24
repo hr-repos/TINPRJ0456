@@ -1,15 +1,15 @@
 from flask import Flask, request
 
-post_freq = "NULL"
+post_freq = 0
 
 app = Flask(__name__)
 
-@app.route('/submit-frequeny', methods=['POST'])
+@app.route('/submit-frequency', methods=['POST'])
 def result():
+    print("received submit-frequency")
     json = request.get_json()
-    print(json)
-    post_freq = json['frequency'] 
-    print("freq had been updated to: " + post_freq)
+    post_freq = int(json['frequency'])
+    print("freq had been updated to: " + str(post_freq))
 
-def start_server():
+if __name__ == "__main__":
     app.run(host="localhost" ,debug=False, port=8090)
