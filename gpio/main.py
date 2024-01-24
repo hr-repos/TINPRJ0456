@@ -24,7 +24,7 @@ def main_func():
         
         #or in the code noted as:
         #    [a0,a1,a2,a3,a4,a5,a6,a7]
-        sensors_data : list = [0,1,2,3,4,5,6,7]#read_sensor_data() 
+        sensors_data : list = read_sensor_data() 
         
         try:
             send_data(sensors_data)
@@ -45,7 +45,7 @@ def main_func():
             sleep_time : int = post_freq
             
         if(sleep_time != "NULL"): #if get_frequency didn't work  
-            sleep(1)#(sleep_time / 1000)
+            sleep(sleep_time / 1000)
             
 server = threading.Thread(target=start_server)
 main   = threading.Thread(target=main_func)
