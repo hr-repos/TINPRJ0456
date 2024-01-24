@@ -9,6 +9,9 @@ import threading
 is_error_send = False
 sleep_time = 1000
 
+def run_server():
+    app.run(host="0.0.0.0" ,debug=False, port=8090)
+
 def try_get_freq():
     print("Trying to retrieve frequency from backend")
     try:
@@ -58,7 +61,10 @@ def main_func():
             sleep(sleep_time / 1000)
 
 try_get_freq()
-server = threading.Thread(target=app.run(host="0.0.0.0" ,debug=False, port=8090))
+server = threading.Thread(target=run_server)
 main   = threading.Thread(target=main_func)
 server.start()
 main.start()
+
+server.join()
+main.join()
