@@ -8,8 +8,9 @@
             <input type="text" v-model="inputCreator" @keyup.enter="submit" placeholder="Creator name"/>
             <input type="number" v-model="inputFrequency" @keyup.enter="submit" placeholder="Measure frequency (ms)"/>
         </div>
-        <div class="items-center flex">
-            <button id="submit" @click="submit">Create project</button>
+        <div class="items-center flex flex-col gap-1.5">
+            <button class="w-full" id="submit" @click="submit">Create project</button>
+            <button class="w-full text-sm" :disabled="selected === ''"  @click="change(0)">Stop measurements</button>
         </div>
     </div>
 
@@ -32,7 +33,12 @@
             <tbody>
                 <tr v-for="i in projects" class="bg-white border-b hover:bg-gray-50">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-950 whitespace-nowrap">
-                        <input @click="change(i.id)" :checked="i.active" type="radio" id="active_project" name="active_project">
+                        <input @click="change(i.id)"
+                               v-model="selected"
+                               type="radio"
+                               :id="`active_project` + i.id"
+                               :value="`active_project` + i.id"
+                               name="active_project">
                     </th>
                     <td class="px-6 py-4 text-lg font-mono">
                         <RouterLink :to="`/project/${i.id}`" v-text="i.id"></RouterLink>
@@ -84,6 +90,7 @@ export default {
             inputCreator: '',
             inputFrequency: null,
             projects: [],
+            selected: ''
         };
     },
     methods: {
@@ -116,6 +123,10 @@ export default {
                         toast.remove(t)
                         toast.error(data.error)
                         return
+                    }
+
+                    if (data.updated === 0) {
+                        this.selected = ''
                     }
 
                     toast.remove(t)
@@ -176,6 +187,12 @@ export default {
         const data = await (await fetch('/api/get-projects')).json()
         next(vm => {
             vm.projects = data
+            for (let i = 0; i < data.length; i++) {
+                if (data[i].active) {
+                    vm.selected = `active_project${data[i].id}`
+                    break
+                }
+            }
         })
     }
 }

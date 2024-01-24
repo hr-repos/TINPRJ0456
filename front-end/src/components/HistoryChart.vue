@@ -64,9 +64,9 @@
             },
           },
           yaxis: {
-            title: {
-              text: 'NH3 in µg/m³',
-            },
+            // title: {
+            //   text: 'NH3 in µg/m³',
+            // },
             min: this.min,
             max: this.max,
           },

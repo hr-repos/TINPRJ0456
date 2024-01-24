@@ -4,12 +4,15 @@
             <span class="font-bold text-xl leading-5 mt-0.5" v-text="name"></span>
             <span class="text-[16px] min-w-fit text-gray-500" v-text="'pin ' + pin"></span>
         </div>
-        <div class="justify-end flex items-end gap-1">
-            <div class="inline-block">
-                <span v-if="title" v-text="title" class="text-5xl font-mono"></span>
-                <LoadSpinner v-else class="my-2 mx-3"/>
+        <div>
+            <div class="justify-end flex items-end gap-1">
+                <div class="inline-block">
+                    <span v-if="title" v-text="title" class="text-5xl font-mono"></span>
+                    <LoadSpinner v-else class="my-2 mx-3"/>
+                </div>
+                <span v-if="calibrated" class="mb-0.5" v-text="unit"></span>
             </div>
-            <span class="mb-0.5">μg/m³</span>
+            <div v-if="!calibrated" class="text-red-600 text-xs text-right">Not calibrated</div>
         </div>
     </div>
 </template>
@@ -20,9 +23,11 @@ import LoadSpinner from '@/components/LoadSpinner.vue'
 export default {
     components: { LoadSpinner },
     props: {
-        title: String,
+        title: Number,
         name: String,
-        pin: Number
+        pin: Number,
+        unit: String,
+        calibrated: Boolean
     }
 }
 </script>

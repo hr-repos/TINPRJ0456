@@ -15,7 +15,9 @@
                     <BorderBlock v-for="i in project.sensors"
                                  :name="i.name"
                                  :pin="i.pin"
-                                 :title="sensorData[i.pin]" />
+                                 :unit="i.unit"
+                                 :title="sensorData[i.pin]"
+                                 :calibrated="i.calibrated"/>
                 </div>
                 <WarningMessage v-else
                                 warning="No sensors found for this project."

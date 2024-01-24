@@ -61,7 +61,7 @@ public class ExportToCsv
 
         for (Sensor sensor : sensors) {
             sensorQueries.add(
-                "MAX(CASE WHEN sensor_id = " + sensor.id() + " THEN value END) AS sensor" + sensor.id()
+                "MAX(CASE WHEN d.sensor_id = " + sensor.id() + " THEN s.calibrationB * d.value + s.calibrationC END) AS sensor" + sensor.id()
             );
             sensorSqlNames.add("sensor" + sensor.id());
             sensorNames.add(sensor.name().replaceAll("[^a-zA-Z0-9]+", " "));
@@ -71,9 +71,9 @@ public class ExportToCsv
         csv.add("date;" + String.join(";", sensorNames));
 
         main.sql().statement(
-            "SELECT FROM_UNIXTIME(measure_millis / 1000) AS date, "
+            "SELECT FROM_UNIXTIME(d.measure_millis / 1000) AS date, "
                 + String.join(",", sensorQueries)
-                + " FROM data GROUP BY measure_millis ORDER BY measure_millis"
+                + " FROM data d JOIN sensors s ON d.sensor_id = s.id GROUP BY d.measure_millis ORDER BY d.measure_millis"
         ).query().complete(data -> {
             while (data.next()) {
                 StringBuilder row = new StringBuilder();
@@ -91,11 +91,12 @@ public class ExportToCsv
     }
 
     // SELECT
-    //     measure_millis,
-    //     MAX(CASE WHEN sensor_id = 1 THEN value END) AS sensor1,
-    //     MAX(CASE WHEN sensor_id = 2 THEN value END) AS sensor2,
-    //     MAX(CASE WHEN sensor_id = 3 THEN value END) AS sensor3
-    // FROM data
-    // GROUP BY measure_millis
-    // ORDER BY measure_millis;
+    //     d.measure_millis,
+    //     MAX(CASE WHEN d.sensor_id = 1 THEN d.value END) AS sensor1,
+    //     MAX(CASE WHEN d.sensor_id = 2 THEN d.value END) AS sensor2,
+    //     MAX(CASE WHEN d.sensor_id = 3 THEN d.value END) AS sensor3
+    // FROM data d
+    //     JOIN sensors s ON d.sensor_id = s.id
+    // GROUP BY d.measure_millis
+    // ORDER BY d.measure_millis;
 }

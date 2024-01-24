@@ -55,14 +55,20 @@ public class GetProject
 
         List<Map<String, Object>> sensors = new ArrayList<>();
         main.sql().statement(
-            "SELECT id, name, pin FROM sensors WHERE project_id = ? ORDER BY pin",
+            "SELECT id, name, pin, unit, calibrationA, calibrationB, calibrationC FROM sensors WHERE project_id = ? ORDER BY pin",
             projectId.get()
         ).query().complete(sensorData -> {
             while (sensorData.next()) {
+                float a = sensorData.getFloat("calibrationA");
+                float b = sensorData.getFloat("calibrationB");
+                float c = sensorData.getFloat("calibrationC");
+
                 sensors.add(new HashMap<>() {{
                     put("id", sensorData.getInt("id"));
                     put("name", sensorData.getString("name"));
                     put("pin", sensorData.getInt("pin"));
+                    put("unit", sensorData.getString("unit"));
+                    put("calibrated", a != 0 || b != 1 || c != 0);
                 }});
             }
         });

@@ -22,11 +22,11 @@ export default {
         return {
             series: [
                 {
-                    name: 'Input NH3',
+                    name: 'Sensor 1',
                     data: this.inputNH3
                 },
                 {
-                    name: 'Output NH3',
+                    name: 'Sensor 2',
                     data: this.outputNH3
                 }
             ],
@@ -84,9 +84,9 @@ export default {
                     range : 1000,
                 },
                 yaxis: {
-                    title: {
-                        text: 'NH3 in µg/m³'
-                    },
+                    // title: {
+                    //     text: 'NH3 in µg/m³'
+                    // },
                     min: this.min,
                     max: this.max
                 },

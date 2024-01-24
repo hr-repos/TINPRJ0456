@@ -36,25 +36,19 @@ public class SubmitSensor {
             return;
         }
 
+        if (details.unit() == null || details.unit().isEmpty() || details.unit().length() > 7) {
+            context.status(HttpStatus.BAD_REQUEST);
+            context.json(Map.of("error", "Invalid sensor unit (max. 7 chars)"));
+            return;
+        }
+
         Optional<Map<String, Object>> inserted = main.sql().statement(
-            "INSERT INTO sensors (name, pin, project_id) VALUES (?, ?, ?)",
+            "INSERT INTO sensors (name, pin, project_id, unit) VALUES (?, ?, ?, ?)",
             details.name(),
             details.pin(),
-            details.project()
-        ).update().complete(data -> {
-            if (data.next()) {
-                return new HashMap<>() {{
-                    put("id", data.getInt("id"));
-                    put("name", data.getString("name"));
-                    put("pin", data.getInt("pin"));
-                    put("project_id", data.getInt("project_id"));
-                    put("calibration_a", data.getNullableFloat("calibrationA"));
-                    put("calibration_b", data.getNullableFloat("calibrationB"));
-                    put("calibration_c", data.getNullableFloat("calibrationC"));
-                }};
-            }
-            return null;
-        });
+            details.project(),
+            details.unit()
+        ).update().complete(data -> data.next()?  Map.of("id", data.getInt("id")) : null);
 
         if (inserted.isEmpty()) {
             context.status(HttpStatus.BAD_REQUEST);

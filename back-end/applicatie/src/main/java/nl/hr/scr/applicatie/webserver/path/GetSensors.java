@@ -23,17 +23,23 @@ public class GetSensors {
 
         List<Map<String, Object>> sensors = new ArrayList<>();
         main.sql().statement(
-            "SELECT id, name, pin, calibrationA, calibrationB, calibrationC FROM sensors WHERE project_id = ? ORDER BY pin",
+            "SELECT id, name, pin, calibrationA, unit, calibrationB, calibrationC FROM sensors WHERE project_id = ? ORDER BY pin",
             projectId.getOrDefault(0)
         ).query().complete(data -> {
             while (data.next()) {
+                float a = data.getFloat("calibrationA");
+                float b = data.getFloat("calibrationB");
+                float c = data.getFloat("calibrationC");
+
                 sensors.add(new HashMap<>() {{
                     put("id", data.getInt("id"));
                     put("name", data.getString("name"));
                     put("pin", data.getInt("pin"));
-                    put("calibration_a", data.getNullableFloat("calibrationA"));
-                    put("calibration_b", data.getNullableFloat("calibrationB"));
-                    put("calibration_c", data.getNullableFloat("calibrationC"));
+                    put("unit", data.getString("unit"));
+                    put("calibration", Map.of(
+                        "calibrated", a != 0 || b != 1 || c != 0,
+                        "a", a, "b", b, "c", c
+                    ));
                 }});
             }
         });

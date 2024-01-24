@@ -3,9 +3,10 @@ CREATE TABLE IF NOT EXISTS sensors (
     name         VARCHAR(20)      NOT NULL,
     pin          TINYINT UNSIGNED NOT NULL,
     project_id   INT UNSIGNED     NOT NULL,
-    calibrationA FLOAT DEFAULT NULL,
-    calibrationB FLOAT DEFAULT NULL,
-    calibrationC FLOAT DEFAULT NULL,
+    unit         VARCHAR(7)       NOT NULL DEFAULT 'μg/m³',
+    calibrationA FLOAT            NOT NULL DEFAULT 0,
+    calibrationB FLOAT            NOT NULL DEFAULT 1,
+    calibrationC FLOAT            NOT NULL DEFAULT 0,
 
     CONSTRAINT foreign_key_sensors_project_id FOREIGN KEY (project_id) REFERENCES projects (id) ON DELETE CASCADE ON UPDATE CASCADE,
 

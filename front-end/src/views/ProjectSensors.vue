@@ -8,6 +8,7 @@
                         <th scope="col" class="px-6 py-3">ID</th>
                         <th scope="col" class="px-6 py-3">Name</th>
                         <th scope="col" class="px-6 py-3">Pin</th>
+                        <th scope="col" class="px-6 py-3">Unit</th>
                         <th scope="col" class="px-6 py-3">Calibration</th>
                     </tr>
                     </thead>
@@ -16,9 +17,10 @@
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap" v-text="i.id"></th>
                         <td class="px-6 py-4" v-text="i.name"></td>
                         <td class="px-6 py-4" v-text="i.pin"></td>
+                        <td class="px-6 py-4" v-text="i.unit"></td>
                         <td class="px-6 py-4">
-                            <div v-if="i.calibration_a || i.calibration_b || i.calibration_c">
-                                {{i.calibration_a}}x² + {{i.calibration_b}}x + {{i.calibration_c}}
+                            <div v-if="i.calibration.calibrated">
+                                {{i.calibration.a}}x² + {{i.calibration.b}}x + {{i.calibration.c}}
                             </div>
                             <div v-else class="text-red-600 text-xs">Not calibrated</div>
                         </td>
@@ -36,6 +38,7 @@
             </div>
             <input @keyup.enter="submit" placeholder="Sensor name" type="text" v-model="inputName">
             <input @keyup.enter="submit" placeholder="Pin number" type="number" v-model="inputPin">
+            <input @keyup.enter="submit" placeholder="Measure unit" type="text" v-model="inputUnit">
             <button id="submit" @click="submit">Add sensor</button>
         </div>
     </div>
@@ -53,6 +56,7 @@ export default {
             sensors: [],
             inputPin: null,
             inputName: '',
+            inputUnit: 'μg/m³',
             project: null
         }
     },
@@ -66,6 +70,7 @@ export default {
                 body: JSON.stringify({
                     name: this.inputName,
                     pin: this.inputPin,
+                    unit: this.inputUnit,
                     project: this.$route.params.project_id
                 }),
             })
@@ -80,7 +85,11 @@ export default {
                     this.sensors.push({
                         id: data.id,
                         name: this.inputName,
-                        pin: this.inputPin
+                        pin: this.inputPin,
+                        unit: this.inputUnit,
+                        calibration: {
+                            calibrated: false, a: 0, b: 1, c: 0
+                        }
                     })
                     toast.remove(t)
                     toast.success('Sensor added')

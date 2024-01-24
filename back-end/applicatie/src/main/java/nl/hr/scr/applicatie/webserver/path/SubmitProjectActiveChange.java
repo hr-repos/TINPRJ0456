@@ -23,10 +23,12 @@ public class SubmitProjectActiveChange
             "UPDATE projects SET active = FALSE"
         ).update().complete();
 
-        main.sql().statement(
-            "UPDATE projects SET active = TRUE WHERE id = ?",
-            activeProject
-        ).update().complete();
+        if (activeProject != 0) {
+            main.sql().statement(
+                "UPDATE projects SET active = TRUE WHERE id = ?",
+                activeProject
+            ).update().complete();
+        }
 
         main.cache().updateActiveProjectId(activeProject);
         main.post().sendFrequency();
