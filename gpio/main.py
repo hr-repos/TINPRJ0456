@@ -14,6 +14,7 @@ app = Flask(__name__)
 
 @app.route('/submit-frequency', methods=['POST'])
 def result():
+    global post_freq
     print("received submit-frequency")
     json = request.get_json()
     
@@ -41,6 +42,7 @@ def try_get_freq():
     return sleep_time
 
 def main_func(freq : int):
+    global post_freq
     sens_error_send = False
     is_error_send = False
     sleep_time = freq
