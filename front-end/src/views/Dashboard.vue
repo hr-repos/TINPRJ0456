@@ -70,26 +70,35 @@ export default {
         },
     },
     mounted() {
-    emitter.on('socket', data => {
-        this.sensorData = data['sensor_data'];
+        emitter.on('socket', data => {
+            const array = data['sensor_data']
 
-        if (this.sensorData[0]) {
-            if (this.inputNH3Array.length >= 30) {
-                this.inputNH3Array.shift();
+            for (let i = 0; i < array.length; i++) {
+                const pin = this.project.pins['pin' + i]
+                if (pin) {
+                    array[i] = Math.floor(pin['b'] * array[i] + pin['c'])
+                }
             }
-            this.inputNH3Array.push(this.sensorData[0]);
-            this.min = Math.min(...this.inputNH3Array);
-        }
 
-        if (this.sensorData[1]) {
-            if (this.outputNH3Array.length >= 30) {
-                this.outputNH3Array.shift();
+            this.sensorData = array;
+
+            if (this.sensorData[0]) {
+                if (this.inputNH3Array.length >= 30) {
+                    this.inputNH3Array.shift();
+                }
+                this.inputNH3Array.push(this.sensorData[0]);
+                this.min = Math.min(...this.inputNH3Array);
             }
-            this.outputNH3Array.push(this.sensorData[1]);
-            this.max = Math.max(...this.outputNH3Array);
-        }
-    });
-},
+
+            if (this.sensorData[1]) {
+                if (this.outputNH3Array.length >= 30) {
+                    this.outputNH3Array.shift();
+                }
+                this.outputNH3Array.push(this.sensorData[1]);
+                this.max = Math.max(...this.outputNH3Array);
+            }
+        });
+    },
     unmounted() {
         emitter.off('socket')
     },

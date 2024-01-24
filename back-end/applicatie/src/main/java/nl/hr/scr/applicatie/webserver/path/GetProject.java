@@ -54,6 +54,8 @@ public class GetProject
         });
 
         List<Map<String, Object>> sensors = new ArrayList<>();
+        Map<String, Object> pins = new HashMap<>();
+
         main.sql().statement(
             "SELECT id, name, pin, unit, calibrationA, calibrationB, calibrationC FROM sensors WHERE project_id = ? ORDER BY pin",
             projectId.get()
@@ -62,11 +64,18 @@ public class GetProject
                 float a = sensorData.getFloat("calibrationA");
                 float b = sensorData.getFloat("calibrationB");
                 float c = sensorData.getFloat("calibrationC");
+                int pin = sensorData.getInt("pin");
+
+                pins.put("pin" + pin, new HashMap<>() {{
+                    put("a", a);
+                    put("b", b);
+                    put("c", c);
+                }});
 
                 sensors.add(new HashMap<>() {{
                     put("id", sensorData.getInt("id"));
                     put("name", sensorData.getString("name"));
-                    put("pin", sensorData.getInt("pin"));
+                    put("pin", pin);
                     put("unit", sensorData.getString("unit"));
                     put("calibrated", a != 0 || b != 1 || c != 0);
                 }});
@@ -74,6 +83,8 @@ public class GetProject
         });
 
         values.put("sensors", sensors);
+        values.put("pins", pins);
+
         context.json(values);
     }
 }
