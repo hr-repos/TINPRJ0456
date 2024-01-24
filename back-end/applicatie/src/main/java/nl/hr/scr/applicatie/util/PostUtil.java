@@ -33,7 +33,7 @@ public class PostUtil {
                 .uri(URI.create(url))
                 .header("Content-Type", "application/json")
                 .POST(buildBodyPublisher(OBJECT_MAPPER.writeValueAsString(body)))
-                .timeout(Duration.of(100, ChronoUnit.MILLIS))
+                .timeout(Duration.of(500, ChronoUnit.MILLIS))
                 .build();
 
             response = httpClient.send(
@@ -66,7 +66,7 @@ public class PostUtil {
                 Map.of("frequency", frequency.orElse(0))
             );
 
-            Main.LOGGER.info("Sent frequency {}: {}", data.statusCode(), data.body());
+            Main.LOGGER.info("Sent frequency. Received status code {}.", data.statusCode());
         } catch (InterruptedException | ExecutionException | IOException e) {
             Main.LOGGER.warn(
                 "Could not send frequency. GPIO will have to get frequency by GET request: {}",
