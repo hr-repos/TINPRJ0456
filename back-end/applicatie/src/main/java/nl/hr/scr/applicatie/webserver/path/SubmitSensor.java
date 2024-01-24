@@ -32,7 +32,7 @@ public class SubmitSensor {
         SensorDetails details = dataValidator.get();
         if (details.name() == null || details.name().length() < 3 || details.name().length() > 20) {
             context.status(HttpStatus.BAD_REQUEST);
-            context.json(Map.of("error", "Invalid name"));
+            context.json(Map.of("error", "Invalid name (min. 3 chars, max. 20 chars)"));
             return;
         }
 
