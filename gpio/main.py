@@ -6,13 +6,12 @@ import RPi.GPIO as GPIO
 import requests
 import threading
 
-is_error_send = False
-sleep_time = 1000
-
 def run_server():
     app.run(host="0.0.0.0" ,debug=False, port=8090)
 
 def try_get_freq():
+    sleep_time = 1000
+    
     print("Trying to retrieve frequency from backend")
     try:
         sleep_time = get_frequency()
@@ -21,9 +20,14 @@ def try_get_freq():
         if not is_error_send:
             print("Connection error: failed to connect to localhost")
             is_error_send = True
-        sleep_time = 1000
+            
+    return sleep_time
 
-def main_func():
+def main_func(freq : int):
+    sens_error_send = False
+    is_error_send = False
+    sleep_time = freq
+    
     print("Starting measurements")
     while True:
 
@@ -36,7 +40,9 @@ def main_func():
             sensors_data : list = read_sensor_data() 
         except:
             sensors_data : list = [0,0,0,0,0,0,0,0]
-            print("could not read sensor data")
+            if not sens_error_send:
+                print("could not read sensor data")
+                sens_error_send = True
             continue
         
         try:
@@ -60,9 +66,9 @@ def main_func():
         if(sleep_time != 0): #if get_frequency didn't work  
             sleep(sleep_time / 1000)
 
-try_get_freq()
+freq = try_get_freq()
 server = threading.Thread(target=run_server)
-main   = threading.Thread(target=main_func)
+main   = threading.Thread(target=main_func, args=())
 server.start()
 main.start()
 
