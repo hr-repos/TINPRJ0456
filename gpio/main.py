@@ -68,7 +68,7 @@ def main_func(freq : int):
 
 freq = try_get_freq()
 server = threading.Thread(target=run_server)
-main   = threading.Thread(target=main_func, args=())
+main   = threading.Thread(target=main_func, args=(freq))
 server.start()
 main.start()
 
