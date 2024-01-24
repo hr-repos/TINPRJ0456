@@ -68,26 +68,26 @@ export default {
         },
     },
     mounted() {
-        emitter.on('socket', data => {
-            this.sensorData = data['sensor_data'] // = array [200, 250, 200, 200, 200, 200]
-                                                  //    pin = 0,   1,   2,   3,   4,   5
+    emitter.on('socket', data => {
+        this.sensorData = data['sensor_data'];
 
-            if (this.sensorData[0]) {
-                if (this.inputNH3Array.length > 30) {
-                    this.inputNH3Array.shift()
-                }
-                this.inputNH3Array.push(this.sensorData[0])
-                this.min = Math.min(Math.min(this.outputNH3Array), Math.min(this.inputNH3Array))
+        if (this.sensorData[0]) {
+            if (this.inputNH3Array.length >= 30) {
+                this.inputNH3Array.shift();
             }
-            if (this.sensorData[1]) {
-                if (this.outputNH3Array.length > 30) {
-                    this.outputNH3Array.shift()
-                }
-                this.outputNH3Array.push(this.sensorData[1])
-                this.max = Math.max(Math.max(this.outputNH3Array), Math.max(this.inputNH3Array))
+            this.inputNH3Array.push(this.sensorData[0]);
+            this.min = Math.min(...this.inputNH3Array);
+        }
+
+        if (this.sensorData[1]) {
+            if (this.outputNH3Array.length >= 30) {
+                this.outputNH3Array.shift();
             }
-        })
-    },
+            this.outputNH3Array.push(this.sensorData[1]);
+            this.max = Math.max(...this.outputNH3Array);
+        }
+    });
+},
     unmounted() {
         emitter.off('socket')
     },

@@ -32,6 +32,7 @@ export default {
             ],
             chartOptions: {
                 chart: {
+                    id : 'realtime',
                     height: 800,
                     // width: 1200,
                     type: 'line',
@@ -45,14 +46,24 @@ export default {
                     },
                     toolbar: {
                         show: false
-                    }
+                    },
+                    animation:{
+                        enabled: true,
+                        dynamicAnimation: {
+                            speed: 1000
+                        }
+                    },
+                    
+                    zoom: {
+                        enabled: false
+                    },
+                    marker: {
+                        show: false
+                    },
                 },
                 colors: ['#83FF33', '#DE5433'],
                 dataLabels: {
                     enabled: false
-                },
-                stroke: {
-                    curve: 'smooth'
                 },
                 // title: {
                 //     text: 'Data sensors',
@@ -65,14 +76,12 @@ export default {
                         opacity: 0.5
                     }
                 },
-                markers: {
-                    size: 1
-                },
                 xAxis: {
                     categories: Array.from({ length: this.inputNH3.length }, (_, i) => (i + 1).toString()),
                     title: {
                         text: 'Time in milliseconds'
-                    }
+                    },
+                    range : 1000,
                 },
                 yaxis: {
                     title: {
@@ -81,6 +90,9 @@ export default {
                     min: this.min,
                     max: this.max
                 },
+                stroke: {
+                        curve: 'smooth',
+                    },
                 legend: {
                     position: 'top',
                     horizontalAlign: 'right',
@@ -91,5 +103,6 @@ export default {
             }
         }
     }
+    
 }
 </script>
