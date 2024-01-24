@@ -1,9 +1,7 @@
 from flask import Flask, request
 from main import main, server
 import json
-from main import lock
-
-post_freq = 0
+from main import lock, post_freq
 
 app = Flask(__name__)
 

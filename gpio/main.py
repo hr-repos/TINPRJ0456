@@ -1,11 +1,13 @@
 from time import sleep
 from adc_reader import read_sensor_data
 from send_data_to_localhost import send_data, get_frequency
-from server import post_freq, app
+from server import  app
 import RPi.GPIO as GPIO
 import requests
 import threading
 
+
+post_freq = 0
 lock = threading.Lock()
 
 def run_server():
