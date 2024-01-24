@@ -20,7 +20,7 @@ def send_data(sensor_list : list):
 def get_frequency():
     get_json = requests.get(URL_get).json()
     return get_json['frequency']
-        
+
 if __name__ == '__main__':
     while True:
         print(get_frequency())
