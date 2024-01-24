@@ -28,8 +28,6 @@ if __name__ == '__main__':
         foo_list = [0,1,2,3,4,5,6,7]
         status = ""
         
-        #for i in range(0,8):
-            #foo_list.append(randint(200, 250))
         try:
             status = send_data(foo_list)
         except requests.ConnectionError:

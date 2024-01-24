@@ -1,5 +1,7 @@
 from flask import Flask, request
+from main import main, server
 import json
+from main import lock
 
 post_freq = 0
 
@@ -9,7 +11,11 @@ app = Flask(__name__)
 def result():
     print("received submit-frequency")
     json = request.get_json()
+    
+    lock.acquire()
     post_freq = int(json['frequency'])
+    lock.release()
+    
     print("freq had been updated to: " + str(post_freq))
     return "201"
 

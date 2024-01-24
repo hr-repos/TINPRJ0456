@@ -6,6 +6,8 @@ import RPi.GPIO as GPIO
 import requests
 import threading
 
+lock = threading.Lock()
+
 def run_server():
     app.run(host="0.0.0.0" ,debug=False, port=8090)
 
