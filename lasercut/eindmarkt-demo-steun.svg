@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100mm"
+   height="50mm"
+   viewBox="0 0 100 50"
+   version="1.1"
+   id="svg2908"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="eindmarkt-demo-steun.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview2910"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="2.8649832"
+     inkscape:cx="188.30826"
+     inkscape:cy="85.689858"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2905" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="vector-effect:non-scaling-stroke;fill:none;stroke:#ff0000;stroke-width:0.28319;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"
+       id="rect3444"
+       width="40"
+       height="40"
+       x="3.9710822"
+       y="4.2481341" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:0.26458333;stroke-dasharray:none;stroke-opacity:1;vector-effect:non-scaling-stroke;-inkscape-stroke:hairline"
+       d="M 15.930023,3.8669733 4.294791,44.382591"
+       id="path4045" />
+    <rect
+       style="fill:none;stroke:#ff0000;stroke-width:0.26458333;stroke-dasharray:none;stroke-opacity:1;vector-effect:non-scaling-stroke;-inkscape-stroke:hairline"
+       id="rect3444-6"
+       width="40"
+       height="40"
+       x="48.0625"
+       y="4.2268968" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:0.26458333;stroke-dasharray:none;stroke-opacity:1;vector-effect:non-scaling-stroke;-inkscape-stroke:hairline"
+       d="M 60.021441,3.8457359 48.386209,44.361353"
+       id="path4045-6" />
+  </g>
+</svg>

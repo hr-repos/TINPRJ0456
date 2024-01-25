@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="160mm"
+   height="55mm"
+   viewBox="0 0 160 55"
+   version="1.1"
+   id="svg314"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="eindmarkt-demo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview316"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="2.3068359"
+     inkscape:cx="299.32775"
+     inkscape:cy="118.56066"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs311" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="vector-effect:non-scaling-stroke;fill:none;stroke:#ff0000;stroke-width:0.264583;-inkscape-stroke:hairline"
+       id="rect487"
+       width="150"
+       height="50"
+       x="2.1252787"
+       y="2.3955629" />
+    <circle
+       style="vector-effect:non-scaling-stroke;fill:none;stroke:#ff0000;stroke-width:0.15517;-inkscape-stroke:hairline"
+       id="path541"
+       cx="27.096689"
+       cy="27.917068"
+       r="3.5" />
+    <rect
+       style="vector-effect:non-scaling-stroke;fill:none;stroke:#ff0000;stroke-width:0.266338;-inkscape-stroke:hairline"
+       id="rect543"
+       width="50"
+       height="15"
+       x="2.0966897"
+       y="2.3955629" />
+    <rect
+       style="vector-effect:non-scaling-stroke;fill:none;stroke:#ff0000;stroke-width:0.264583;stroke-dasharray:none;-inkscape-stroke:hairline"
+       id="rect543-6"
+       width="50"
+       height="15"
+       x="2.0966897"
+       y="37.345879" />
+    <circle
+       style="vector-effect:non-scaling-stroke;fill:none;stroke:#ff0000;stroke-width:0.15517;-inkscape-stroke:hairline"
+       id="path541-3"
+       cx="127.08244"
+       cy="28.073229"
+       r="3.5" />
+    <rect
+       style="vector-effect:non-scaling-stroke;fill:none;stroke:#ff0000;stroke-width:0.266338;-inkscape-stroke:hairline"
+       id="rect543-7"
+       width="50"
+       height="15"
+       x="102.08244"
+       y="2.5517228" />
+    <rect
+       style="vector-effect:non-scaling-stroke;fill:none;stroke:#ff0000;stroke-width:0.264583;stroke-dasharray:none;-inkscape-stroke:hairline"
+       id="rect543-6-3"
+       width="50"
+       height="15"
+       x="102.08244"
+       y="37.502041" />
+    <text
+       xml:space="preserve"
+       style="font-size:17.6389px;letter-spacing:0px;vector-effect:non-scaling-stroke;fill:none;stroke:#ff0000;stroke-width:0.264583;stroke-dasharray:none;-inkscape-stroke:hairline"
+       x="77.235535"
+       y="9.0609331"
+       id="text1248"><tspan
+         sodipodi:role="line"
+         style="font-size:11.2889px;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         x="77.235535"
+         y="9.0609331"
+         id="tspan1352"><tspan
+   id="tspan1354"
+   style="font-size:17.6389px;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+   dy="12">SCR</tspan></tspan><tspan
+         sodipodi:role="line"
+         style="font-size:11.2889px;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         x="77.235535"
+         y="31.109558"
+         id="tspan1356">systeem</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7.05556px;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:1"
+       x="4.2753191"
+       y="23.856628"
+       id="text2133"><tspan
+         sodipodi:role="line"
+         id="tspan2131"
+         style="font-size:7.05556px;text-align:start;text-anchor:start;stroke-width:0.264583"
+         x="4.2753191"
+         y="23.856628"
+         dy="2">in-</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:7.05556px;text-align:start;text-anchor:start;stroke-width:0.264583"
+         x="4.2753191"
+         y="32.676079"
+         id="tspan2149">put</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7.05556px;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:1"
+       x="149.69164"
+       y="23.627241"
+       id="text2137"><tspan
+         sodipodi:role="line"
+         id="tspan2135"
+         style="font-size:7.05556px;text-align:end;text-anchor:end;stroke-width:0.264583"
+         x="149.69164"
+         y="23.627241"
+         dy="2">out-</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:7.05556px;text-align:end;text-anchor:end;stroke-width:0.264583"
+         x="149.69164"
+         y="32.44669"
+         id="tspan2151">put</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:1"
+       x="61.559551"
+       y="38.767025"
+       id="text2141"><tspan
+         sodipodi:role="line"
+         id="tspan2139"
+         style="font-size:3.175px;text-align:start;text-anchor:start;stroke-width:0.264583"
+         x="61.559551"
+         y="38.767025">Door: Tigo Goes</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:3.175px;text-align:start;text-anchor:start;stroke-width:0.264583"
+         x="61.559551"
+         y="42.735775"
+         id="tspan2143">         Thomas van Vliet</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:3.175px;text-align:start;text-anchor:start;stroke-width:0.264583"
+         x="61.559551"
+         y="46.704525"
+         id="tspan2145">         Tim Kieboom</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:3.175px;text-align:start;text-anchor:start;stroke-width:0.264583"
+         x="61.559551"
+         y="50.673275"
+         id="tspan2147">         Eli van der Does</tspan></text>
+  </g>
+</svg>
