@@ -56,6 +56,7 @@
 </template>
 
 <script lang="ts">
+// all the used imports
 import { websocket } from '@/stores/websocket'
 import { defineComponent } from 'vue'
 import { mapState } from 'pinia'
@@ -63,6 +64,7 @@ import DropdownMenu from './components/DropdownMenu.vue'
 import { pageLoading } from '@/stores/pageLoading'
 import LoadSpinner from "@/components/LoadSpinner.vue";
 
+//Navigation items and their routes
 const navigation = [
     { name: 'Home', to: '/' },
     { name: 'Dashboard', to: '/dashboard' },

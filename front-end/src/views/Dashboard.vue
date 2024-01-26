@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="chart block">
-            <LineChart title="chart" :inputNH3="inputNH3Array" :outputNH3="outputNH3Array"/>
+            <LineChart title="chart" :inputNH3="inputNH3Array" :outputNH3="outputNH3Array" :array3= "array3Array" :array4= "array4Array" :array5= "array5Array" :array6= "array6Array" :array7= "array7Array" :array8= "array8Array"/>
         </div>
         <div>
             <button @click="test" v-if="testing">Disable testing</button>
@@ -45,6 +45,7 @@ import WarningMessage from '@/components/WarningMessage.vue'
 export default {
     components: { WarningMessage, LineChart, BorderBlock },
     methods: {
+        //test function to send random data
         test() {
             this.testing = !this.testing
             if (this.testing) {
@@ -53,7 +54,12 @@ export default {
                         "data": [
                             Math.floor(Math.random() * 100 + 200),
                             Math.floor(Math.random() * 100 + 200),
-                            Math.floor(Math.random() * 100 + 200)
+                            Math.floor(Math.random() * 100 + 200),
+                            Math.floor(Math.random() * 100 + 200),
+                            Math.floor(Math.random() * 100 + 200),
+                            Math.floor(Math.random() * 100 + 200),
+                            Math.floor(Math.random() * 100 + 200),
+                            Math.floor(Math.random() * 100 + 200),
                         ]
                     }
 
@@ -70,9 +76,11 @@ export default {
         },
     },
     mounted() {
+        //get sensor data from the socket
         emitter.on('socket', data => {
             const array = data['sensor_data']
-
+            
+            //calibrate the sensor data
             for (let i = 0; i < array.length; i++) {
                 const pin = this.project.pins['pin' + i]
                 if (pin) {
@@ -81,21 +89,22 @@ export default {
             }
 
             this.sensorData = array;
-
-            if (this.sensorData[0]) {
+            //add sensor data to array
+            if (this.sensorData[0] || this.sensorData[1] || this.sensorData[2] || this.sensorData[3] || this.sensorData[4] || this.sensorData[5] || this.sensorData[6] || this.sensorData[7]) {
                 if (this.inputNH3Array.length >= 30) {
                     this.inputNH3Array.shift();
                 }
+                //add sensor data to array
                 this.inputNH3Array.push(this.sensorData[0]);
-                this.min = Math.min(...this.inputNH3Array);
-            }
-
-            if (this.sensorData[1]) {
-                if (this.outputNH3Array.length >= 30) {
-                    this.outputNH3Array.shift();
-                }
                 this.outputNH3Array.push(this.sensorData[1]);
-                this.max = Math.max(...this.outputNH3Array);
+                this.array3Array.push(this.sensorData[2]);
+                this.array4Array.push(this.sensorData[3]);
+                this.array5Array.push(this.sensorData[4]);
+                this.array6Array.push(this.sensorData[5]);
+                this.array7Array.push(this.sensorData[6]);
+                this.array8Array.push(this.sensorData[7]);
+                this.min = Math.min(...this.inputNH3Array);
+                this.max = Math.max(...this.inputNH3Array);
             }
         });
     },
@@ -104,12 +113,20 @@ export default {
     },
     data() {
         return {
+            //return sensor data
             sensorData: [],
             project: null,
             inputNH3Array: [],
             outputNH3Array: [],
+            array3Array: [],
+            array4Array: [],
+            array5Array: [],
+            array6Array: [],
+            array7Array: [],
+            array8Array: [],
             min: 0,
             max: 0,
+
             testing: false,
             fakeDataInterval: 0,
         }

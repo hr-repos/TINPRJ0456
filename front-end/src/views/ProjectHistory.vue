@@ -4,10 +4,10 @@
             <DateTimeRangePicker/>
         </div>
 
-        <!-- Existing LineChart for inputNH3 and outputNH3 -->
+       
         <LineChart :inputNH3="inputNH3" :outputNH3="outputNH3" :min="min" :max="max"/>
 
-        <!-- New HistoryChart for database values -->
+        
         <HistoryChart
             v-if="activeProject"
             :databaseValues="databaseValues"

@@ -59,6 +59,8 @@ export default {
                 hour12: false,
             })
         },
+        //delete project function
+        //this function will delete the project and all the data associated with it
         async deleteProject() {
             if (confirm('Are you sure you want to delete this project? This will also delete all measure data and sensors within this project.')) {
                 const t = toast.info('Deleting project...')

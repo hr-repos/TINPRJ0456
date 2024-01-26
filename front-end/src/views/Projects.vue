@@ -85,6 +85,7 @@ export default {
     components: { WarningMessage },
     data() {
         return {
+            // Input fields for creating a new project
             inputName: '',
             inputDescription: '',
             inputCreator: '',

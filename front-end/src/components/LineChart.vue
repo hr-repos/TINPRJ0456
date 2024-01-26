@@ -12,14 +12,22 @@ export default {
         apexchart: VueApexCharts
     },
     props: {
+      //props to get the data from the dashboard
         inputNH3: Array,
         outputNH3: Array,
+        array3: Array,
+        array4: Array,
+        array5: Array,
+        array6: Array,
+        array7: Array,
+        array8: Array,
         min: Number,
         max: Number,
     },
     data()
     {
         return {
+          //name of the sensors
             series: [
                 {
                     name: 'Sensor 1',
@@ -28,8 +36,33 @@ export default {
                 {
                     name: 'Sensor 2',
                     data: this.outputNH3
+                },
+                {
+                    name: 'Sensor 3',
+                    data: this.array3
+                },
+                {
+                    name: 'Sensor 4',
+                    data: this.array4
+                },
+                {
+                    name: 'Sensor 5',
+                    data: this.array5
+                },
+                {
+                    name: 'Sensor 6',
+                    data: this.array6
+                },
+                {
+                    name: 'Sensor 7',
+                    data: this.array7
+                },
+                {
+                    name: 'Sensor 8',
+                    data: this.array8
                 }
             ],
+            //options for the chart
             chartOptions: {
                 chart: {
                     id : 'realtime',
@@ -61,14 +94,10 @@ export default {
                         show: false
                     },
                 },
-                colors: ['#83FF33', '#DE5433'],
+                colors: ['#83FF33', '#DE5433', '#4472BD', '#BC46D4', '#D44673', '#33FCFF', '#B37768', '#D3FF33'],
                 dataLabels: {
                     enabled: false
                 },
-                // title: {
-                //     text: 'Data sensors',
-                //     align: 'left'
-                // },
                 grid: {
                     borderColor: '#8f8f8f',
                     row: {
@@ -84,9 +113,6 @@ export default {
                     range : 1000,
                 },
                 yaxis: {
-                    // title: {
-                    //     text: 'NH3 in µg/m³'
-                    // },
                     min: this.min,
                     max: this.max
                 },
