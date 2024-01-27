@@ -24,6 +24,7 @@ public class PostUtil {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
+    // send post request
     public static HttpResponse<String> postRequest(String url, Object body)
     throws InterruptedException, ExecutionException, IOException {
         HttpResponse<String> response;
@@ -45,6 +46,7 @@ public class PostUtil {
         return response;
     }
 
+    // build body publisher for post request
     private static HttpRequest.BodyPublisher buildBodyPublisher(String jsonBody) {
         return HttpRequest.BodyPublishers.ofString(
             jsonBody,
@@ -53,7 +55,7 @@ public class PostUtil {
     }
 
     // send to gpio that a different frequency is needed
-    public void sendFrequency () {
+    public void sendFrequency() {
         Optional<Integer> frequency = main.sql().statement(
             "SELECT frequency FROM projects WHERE active = TRUE LIMIT 1"
         ).query().complete(data -> data.next()? data.getInt("frequency") : null);

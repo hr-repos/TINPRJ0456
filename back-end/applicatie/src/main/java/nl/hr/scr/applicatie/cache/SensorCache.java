@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /* Eli @ January 22, 2024 (nl.hr.scr.applicatie.cache) */
-public final class SensorCache
-{
+// keep track of active project and its sensors
+public final class SensorCache {
     private final Main main;
 
     //                pin      sensor_id
@@ -18,6 +18,7 @@ public final class SensorCache
     public SensorCache(Main main) {
         this.main = main;
 
+        // we need to cache the active project on startup
         main.sql().statement("SELECT id FROM projects WHERE active = TRUE LIMIT 1").query().complete(data -> {
             if (data.next()) {
                 updateActiveProjectId(data.getInt("id"));
@@ -29,7 +30,7 @@ public final class SensorCache
         return activeProjectId.get();
     }
 
-    public void updateActiveProjectId (int activeProjectId) {
+    public void updateActiveProjectId(int activeProjectId) {
         this.activeProjectId.set(activeProjectId);
 
         this.activeSensors.clear();
@@ -44,6 +45,7 @@ public final class SensorCache
     }
 
     public void updateSensors(int projectId) {
+        // only update sensors if the active project is updated
         if (getActiveProjectId() != projectId) {
             return;
         }
@@ -51,8 +53,7 @@ public final class SensorCache
         updateActiveProjectId(projectId);
     }
 
-    public Map<Integer, Integer> getActiveSensors ()
-    {
+    public Map<Integer, Integer> getActiveSensors() {
         return activeSensors;
     }
 }

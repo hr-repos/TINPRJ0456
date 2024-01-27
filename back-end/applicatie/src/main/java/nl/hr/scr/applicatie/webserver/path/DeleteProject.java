@@ -10,10 +10,10 @@ import nl.hr.scr.applicatie.webserver.json.ProjectId;
 import java.util.Map;
 
 /* Eli van der Does (1061322) @ January 22, 2024 */
-public class DeleteProject
-{
+public class DeleteProject {
     private final Main main;
 
+    // api post endpoint to delete a project
     public DeleteProject (Webserver webserver, Main main) {
         this.main = main;
         webserver.http().post("api/delete-project", this::handle);

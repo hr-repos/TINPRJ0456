@@ -16,6 +16,7 @@ import java.util.Optional;
 public class SubmitProject {
     private final Main main;
 
+    // api post endpoint to submit a new project
     public SubmitProject(Webserver webserver, Main main) {
         this.main = main;
         webserver.http().post("api/submit-project", this::handle);
@@ -49,6 +50,7 @@ public class SubmitProject {
             return;
         }
 
+        // insert project into database
         Optional<Map<String, Object>> inserted = main.sql().statement(
             "INSERT INTO projects (name, description, creator_name, active, frequency) VALUES (?, ?, ?, ?, ?)",
             details.name(),
@@ -72,6 +74,7 @@ public class SubmitProject {
             return null;
         });
 
+        // return error if project could not be inserted
         if (inserted.isEmpty()) {
             context.status(HttpStatus.BAD_REQUEST);
             context.json(Map.of("error", "Could not insert project"));

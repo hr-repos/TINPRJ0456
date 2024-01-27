@@ -14,11 +14,11 @@ import java.util.Map;
 import java.util.Optional;
 
 /* Eli van der Does (1061322) @ January 24, 2024 */
-public class SubmitCalibration
-{
+public class SubmitCalibration {
     private final Main main;
 
-    public SubmitCalibration (Webserver webserver, Main main) {
+    // api post endpoint to submit calibration data from dashboard
+    public SubmitCalibration(Webserver webserver, Main main) {
         this.main = main;
         webserver.http().post("api/submit-calibration", this::handle);
     }

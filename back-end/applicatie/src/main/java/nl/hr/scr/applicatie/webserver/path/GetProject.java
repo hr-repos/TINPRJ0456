@@ -12,10 +12,10 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /* Eli van der Does (1061322) @ January 22, 2024 */
-public class GetProject
-{
+public class GetProject {
     private final Main main;
 
+    // api get endpoint to get a project, if no id is given the active project is returned
     public GetProject(Webserver webserver, Main main) {
         this.main = main;
         webserver.http().get("api/get-project/{id}", this::handle);
@@ -28,6 +28,7 @@ public class GetProject
             context.pathParamMap().isEmpty()? 0 : context.pathParamAsClass("id", Integer.class).getOrDefault(0)
         );
 
+        // depending on the given id, get the project or the active project
         UnparsedStatement statement;
         if (projectId.get() == 0) {
             statement = main.sql().statement(
@@ -40,6 +41,7 @@ public class GetProject
             );
         }
 
+        // get project data
         statement.query().complete(data -> {
             if (data.next()) {
                 projectId.set(data.getInt("id"));
@@ -56,6 +58,7 @@ public class GetProject
         List<Map<String, Object>> sensors = new ArrayList<>();
         Map<String, Object> pins = new HashMap<>();
 
+        // put sensor data in the values maps
         main.sql().statement(
             "SELECT id, name, pin, unit, calibrationA, calibrationB, calibrationC FROM sensors WHERE project_id = ? ORDER BY pin",
             projectId.get()

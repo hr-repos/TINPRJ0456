@@ -9,10 +9,10 @@ import java.util.Map;
 import java.util.Optional;
 
 /* Eli van der Does (1061322) @ January 23, 2024 */
-public class GetFrequency
-{
+public class GetFrequency {
     private final Main main;
 
+    // api get endpoint to get the current frequency of the active project
     public GetFrequency(Webserver webserver, Main main) {
         this.main = main;
         webserver.http().get("api/get-frequency", this::handle);

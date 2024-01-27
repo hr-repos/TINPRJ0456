@@ -14,9 +14,10 @@ import java.util.Map;
 public final class SubmitSensorData {
     private final Main main;
 
+    // api post endpoint to submit sensor measure data
     public SubmitSensorData(Webserver webserver, Main main) {
         this.main = main;
-        webserver.http().post("api/sensors", this::handle); // <- deprecated
+        webserver.http().post("api/sensors", this::handle); // <- deprecated, still used by gpio
         webserver.http().post("api/submit-sensor-data", this::handle);
     }
 
@@ -30,11 +31,12 @@ public final class SubmitSensorData {
 
         long millis = System.currentTimeMillis();
 
+        // insert sensor data into database for each sensor separately
         List<Integer> list = dataValidator.get().data();
-        for (int i = 0; i < list.size(); i++)
-        {
-            if (!main.cache().getActiveSensors().containsKey(i))
+        for (int i = 0; i < list.size(); i++) {
+            if (!main.cache().getActiveSensors().containsKey(i)) {
                 continue;
+            }
 
             main.sql().statement(
                 "INSERT INTO data (sensor_id, value, measure_millis) VALUES (?, ?, ?)",
@@ -44,6 +46,7 @@ public final class SubmitSensorData {
             ).update().queue();
         }
 
-        this.main.api().socket().broadcast(Map.of("sensor_data", dataValidator.get().data()));
+        // broadcast sensor data to all connected dashboards (websocket)
+        main.api().socket().broadcast(Map.of("sensor_data", dataValidator.get().data()));
     }
 }

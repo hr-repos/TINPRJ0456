@@ -15,6 +15,7 @@ import java.util.Optional;
 public class SubmitSensor {
     private final Main main;
 
+    // api post endpoint to submit a new sensor
     public SubmitSensor(Webserver webserver, Main main) {
         this.main = main;
         webserver.http().post("api/submit-sensor", this::handle);
@@ -42,6 +43,7 @@ public class SubmitSensor {
             return;
         }
 
+        // insert sensor into database and get returned id
         Optional<Map<String, Object>> inserted = main.sql().statement(
             "INSERT INTO sensors (name, pin, project_id, unit) VALUES (?, ?, ?, ?)",
             details.name(),
@@ -56,6 +58,7 @@ public class SubmitSensor {
             return;
         }
 
+        // update cache
         main.cache().updateSensors(details.project());
 
         context.json(inserted.get());

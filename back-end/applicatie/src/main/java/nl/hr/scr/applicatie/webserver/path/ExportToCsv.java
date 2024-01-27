@@ -12,10 +12,10 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /* Eli van der Does (1061322) @ January 22, 2024 */
-public class ExportToCsv
-{
+public class ExportToCsv {
     private final Main main;
 
+    // api post endpoint to export project data to csv
     public ExportToCsv(Webserver webserver, Main main) {
         this.main = main;
         webserver.http().get("api/export-to-csv/{project_id}", this::handle);
@@ -35,6 +35,7 @@ public class ExportToCsv
             return;
         }
 
+        // sensors for the project
         List<Sensor> sensors = new ArrayList<>();
         main.sql().statement(
             "SELECT id, pin, name FROM sensors WHERE project_id = ?",
@@ -59,6 +60,7 @@ public class ExportToCsv
         List<String> sensorSqlNames = new ArrayList<>();
         List<String> sensorNames = new ArrayList<>();
 
+        // build sql query for each sensor
         for (Sensor sensor : sensors) {
             sensorQueries.add(
                 "MAX(CASE WHEN d.sensor_id = " + sensor.id() + " THEN s.calibrationB * d.value + s.calibrationC END) AS sensor" + sensor.id()
@@ -67,9 +69,11 @@ public class ExportToCsv
             sensorNames.add(sensor.name().replaceAll("[^a-zA-Z0-9]+", " "));
         }
 
+        // list of csv rows
         List<String> csv = new ArrayList<>();
-        csv.add("date;" + String.join(";", sensorNames));
+        csv.add("date;" + String.join(";", sensorNames)); // starting with the date and sensor names
 
+        // select all the sensor data from the project
         main.sql().statement(
             "SELECT FROM_UNIXTIME(d.measure_millis / 1000) AS date, "
                 + String.join(",", sensorQueries)
@@ -87,8 +91,10 @@ public class ExportToCsv
         });
 
         context.contentType(ContentType.TEXT_CSV);
-        context.result(String.join("\n", csv));
+        context.result(String.join("\n", csv)); // turn to a string
     }
+
+    // query above here is based on the following query for the csv:
 
     // SELECT
     //     d.measure_millis,

@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
 /* Eli @ September 30, 2023 (nl.hr.scr.applicatie) */
 public final class Main {
     public static Logger LOGGER = LoggerFactory.getLogger(Main.class.getSimpleName());
-    private static final long STARTUP_MILLIS = System.currentTimeMillis();
+    private static final long STARTUP_MILLIS = System.currentTimeMillis(); // used to calculate startup time
 
     private Config config;
     private Esqueleto sql;
@@ -26,10 +26,12 @@ public final class Main {
     private PostUtil post;
 
     public void onEnable() {
+        // load and parse config
         this.config = Config.parse("config.yml");
         if (this.config == null)
             return;
 
+        // set up sql connection
         this.sql = Esqueleto.create(sql -> {
             sql.setHost(this.config.sql().host());
             sql.setPort(this.config.sql().port());
@@ -64,10 +66,11 @@ public final class Main {
         new SubmitSensor(this.webserver, this);
         new SubmitSensorData(this.webserver, this);
 
-        // send frequency to gpio
+        // send frequency to gpio when application is started
         this.post.sendFrequency();
     }
 
+    // called when the application is stopped
     public void onDisable() {
         Optional.ofNullable(this.webserver).ifPresent(Webserver::close);
         Optional.ofNullable(this.sql).ifPresent(Esqueleto::close);
@@ -93,6 +96,7 @@ public final class Main {
         return post;
     }
 
+    // called when the application is started
     public static void main(String... args) {
         LOGGER.info("Opstarten van de server..");
 

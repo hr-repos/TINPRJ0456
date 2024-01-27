@@ -13,6 +13,7 @@ import java.util.Map;
 public class GetSensors {
     private final Main main;
 
+    // api get endpoint to get all sensors for a project
     public GetSensors(Webserver webserver, Main main) {
         this.main = main;
         webserver.http().get("api/get-sensors/{project_id}", this::handle);
@@ -60,6 +61,7 @@ public class GetSensors {
             }
         });
 
+        // put all the data together in a map
         context.json(Map.of(
             "sensors", sensors,
             "project", project

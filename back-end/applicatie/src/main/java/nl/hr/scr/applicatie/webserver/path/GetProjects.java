@@ -13,6 +13,7 @@ import java.util.Map;
 public class GetProjects {
     private final Main main;
 
+    // api get endpoint to get all projects for the projects page
     public GetProjects(Webserver webserver, Main main) {
         this.main = main;
         webserver.http().get("api/get-projects", this::handle);
@@ -28,6 +29,7 @@ public class GetProjects {
                 long projectId = data.getInt("id");
                 List<Map<String, Object>> sensors = new ArrayList<>();
 
+                // get sensors for the project
                 main.sql().statement(
                     "SELECT id, name, pin FROM sensors WHERE project_id = ? ORDER BY pin",
                     projectId

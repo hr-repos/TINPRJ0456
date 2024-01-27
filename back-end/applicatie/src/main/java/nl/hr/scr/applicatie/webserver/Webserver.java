@@ -11,18 +11,19 @@ import org.slf4j.LoggerFactory;
 public final class Webserver {
     public static final Logger LOGGER = LoggerFactory.getLogger(Webserver.class.getSimpleName());
 
-    private final Main main;
     private final Javalin javalin;
     private final Websocket socket;
 
+    // webserver to handle http and websocket requests
     public Webserver(Main main) {
-        this.main = main;
+        // create webserver instance with javalin
         this.javalin = Javalin.create(config -> {
             config.showJavalinBanner = false;
         }).start(
             main.config().webserver().port()
         );
 
+        // log all requests
         this.javalin.after(context -> {
             LOGGER.info("{} {} {}: {}",
                 NetworkUtil.ip(context),
@@ -31,17 +32,20 @@ public final class Webserver {
                 context.path());
         });
 
-        this.socket = new Websocket(this, main);
+        this.socket = new Websocket(this);
     }
 
+    // close webserver
     public void close() {
         this.javalin.close();
     }
 
+    // get javalin webserver instance
     public Javalin http() {
         return javalin;
     }
 
+    // get websocket instance
     public Websocket socket() {
         return socket;
     }

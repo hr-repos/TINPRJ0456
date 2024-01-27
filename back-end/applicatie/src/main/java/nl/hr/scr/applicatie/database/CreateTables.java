@@ -3,8 +3,7 @@ package nl.hr.scr.applicatie.database;
 import nl.hr.scr.applicatie.Main;
 
 /* Eli @ October 07, 2023 (nl.hr.scr.applicatie.database) */
-public final class CreateTables
-{
+public final class CreateTables {
     public CreateTables(Main main) {
         main.sql().statement("""
             CREATE TABLE IF NOT EXISTS projects (
