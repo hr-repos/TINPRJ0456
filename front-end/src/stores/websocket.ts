@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import emitter from '@/router/emitter'
 
+// keep a websocket connection
 export const websocket = defineStore('websocket', {
     state: () => ({
         socket: null as WebSocket | null,
@@ -23,6 +24,7 @@ export const websocket = defineStore('websocket', {
                 emitter.emit('socket', data)
             }
 
+            // keep the connection alive
             const heartbeat = setInterval(() => this.socket?.send(''), 20000)
 
             this.socket.onclose = () => {
