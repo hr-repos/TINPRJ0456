@@ -1,7 +1,8 @@
-cd gpio
+cd ~
 
 while true
 do
-    python3 -i main.py
+    source myenv/bin/activate
+    python3 -i TI-project56-scr/gpio/main.py
     sleep 1s
 done
