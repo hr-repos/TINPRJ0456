@@ -77,7 +77,8 @@ public class ExportToCsv {
         main.sql().statement(
             "SELECT FROM_UNIXTIME(d.measure_millis / 1000) AS date, "
                 + String.join(",", sensorQueries)
-                + " FROM data d JOIN sensors s ON d.sensor_id = s.id GROUP BY d.measure_millis ORDER BY d.measure_millis"
+                + " FROM data d JOIN sensors s ON d.sensor_id = s.id WHERE s.project_id = ? GROUP BY d.measure_millis ORDER BY d.measure_millis",
+            projectId.get()
         ).query().complete(data -> {
             while (data.next()) {
                 StringBuilder row = new StringBuilder();
@@ -103,6 +104,7 @@ public class ExportToCsv {
     //     MAX(CASE WHEN d.sensor_id = 3 THEN d.value END) AS sensor3
     // FROM data d
     //     JOIN sensors s ON d.sensor_id = s.id
+    // WHERE s.project_id = ?
     // GROUP BY d.measure_millis
     // ORDER BY d.measure_millis;
 }
